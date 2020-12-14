@@ -77,19 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable, readonly) NSString *fetchedBundleID;
 
 /**
- * Indicates whether the app needs onboarding
- */
-@property(nonatomic, readonly) BOOL appNeedsOnboarding;
-
-/**
- * Indicates whether the app needs an update
- */
-@property(nonatomic, readonly) BOOL appUpdateRequired;
-
-/**
  * When this is false, Crashlytics will not start up
  */
-@property(nonatomic, readonly) BOOL crashReportingEnabled;
+@property(nonatomic, readonly) BOOL collectReportsEnabled;
 
 /**
  * When this is false, Crashlytics will not collect non-fatal errors and errors
@@ -101,6 +91,11 @@ NS_ASSUME_NONNULL_BEGIN
  * When this is false, Crashlytics will not collect custom exceptions from the API
  */
 @property(nonatomic, readonly) BOOL customExceptionsEnabled;
+
+/**
+ * Determine if the SDK should use the new endpoint for uploading reports
+ */
+@property(nonatomic, readonly) BOOL shouldUseNewReportEndpoint;
 
 /**
  * Returns the maximum number of custom exception events that will be

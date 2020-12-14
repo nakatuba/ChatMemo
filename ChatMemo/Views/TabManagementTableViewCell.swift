@@ -15,10 +15,12 @@ class TabManagementTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         renameButton.layer.borderWidth = 1.0
         renameButton.layer.borderColor = UIColor.systemGreen.cgColor
         renameButton.layer.cornerRadius = 4.0
         renameButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
         deleteButton.layer.borderWidth = 1.0
         deleteButton.layer.borderColor = UIColor.systemRed.cgColor
         deleteButton.layer.cornerRadius = 4.0
@@ -27,6 +29,7 @@ class TabManagementTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         textLabel?.frame.size.width -= renameButton.frame.width + deleteButton.frame.width + 20
     }
     

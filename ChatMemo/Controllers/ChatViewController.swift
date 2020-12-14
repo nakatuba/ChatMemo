@@ -13,7 +13,7 @@ import RealmSwift
 import XLPagerTabStrip
 import SKPhotoBrowser
 
-class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var tabIndex = 0
     var messageList: [MockMessage] = []
@@ -251,7 +251,10 @@ extension MessageCollectionViewCell {
     @objc func editMessage(_ sender: Any?) {
         if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("editMessage:"), forItemAt: indexPath, withSender: sender)
+                collectionView.delegate?.collectionView?(collectionView,
+                                                         performAction: NSSelectorFromString("editMessage:"),
+                                                         forItemAt: indexPath,
+                                                         withSender: sender)
             }
         }
     }
@@ -259,7 +262,10 @@ extension MessageCollectionViewCell {
     @objc func copyMessage(_ sender: Any?) {
         if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("copyMessage:"), forItemAt: indexPath, withSender: sender)
+                collectionView.delegate?.collectionView?(collectionView,
+                                                         performAction: NSSelectorFromString("copyMessage:"),
+                                                         forItemAt: indexPath,
+                                                         withSender: sender)
             }
         }
     }
@@ -267,7 +273,10 @@ extension MessageCollectionViewCell {
     @objc func deleteMessage(_ sender: Any?) {
         if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("deleteMessage:"), forItemAt: indexPath, withSender: sender)
+                collectionView.delegate?.collectionView?(collectionView,
+                                                         performAction: NSSelectorFromString("deleteMessage:"),
+                                                         forItemAt: indexPath,
+                                                         withSender: sender)
             }
         }
     }
@@ -409,7 +418,7 @@ extension ChatViewController: MessageCellDelegate {
     
 }
 
-extension ChatViewController: MessageInputBarDelegate {
+extension ChatViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let components = inputBar.inputTextView.components

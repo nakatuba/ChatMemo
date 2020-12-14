@@ -19,6 +19,7 @@
 		652B60A223EDC8C700BF2E90 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B60A023EDC8C600BF2E90 /* MockUser.swift */; };
 		652B60A423EDC95E00BF2E90 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B60A323EDC95D00BF2E90 /* MockMessage.swift */; };
 		652B60A823EF784C00BF2E90 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B60A723EF784C00BF2E90 /* Tab.swift */; };
+		652C7B7C2587E72B0027A859 /* SavedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C7B7B2587E72B0027A859 /* SavedMessage.swift */; };
 		6536739B23F72AC100207269 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536739A23F72AC100207269 /* MainViewController.swift */; };
 		654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */; };
 		65773FA9246A62BC0011DEFF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65773FAB246A62BC0011DEFF /* Localizable.strings */; };
@@ -43,6 +44,7 @@
 		652B60A023EDC8C600BF2E90 /* MockUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		652B60A323EDC95D00BF2E90 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
 		652B60A723EF784C00BF2E90 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		652C7B7B2587E72B0027A859 /* SavedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMessage.swift; sourceTree = "<group>"; };
 		6536739A23F72AC100207269 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementViewController.swift; sourceTree = "<group>"; };
 		65773FAA246A62BC0011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -100,25 +102,50 @@
 			children = (
 				6506474723ECC7DB00E914D7 /* AppDelegate.swift */,
 				6506474923ECC7DB00E914D7 /* SceneDelegate.swift */,
+				652C7B792587E6CE0027A859 /* Models */,
+				652C7B7A2587E6E80027A859 /* Views */,
+				652C7B7E2587E7850027A859 /* Controllers */,
+				6597C4842475675400BE853B /* SettingsTableViewController.swift */,
+				6506475023ECC7DC00E914D7 /* Assets.xcassets */,
+				6506475223ECC7DC00E914D7 /* LaunchScreen.storyboard */,
+				6506475523ECC7DC00E914D7 /* Info.plist */,
+				65212D4B2417E01C00585678 /* GoogleService-Info.plist */,
+				65773FAB246A62BC0011DEFF /* Localizable.strings */,
+				65773FB0246A67830011DEFF /* InfoPlist.strings */,
+			);
+			path = ChatMemo;
+			sourceTree = "<group>";
+		};
+		652C7B792587E6CE0027A859 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				652B60A723EF784C00BF2E90 /* Tab.swift */,
+				652C7B7B2587E72B0027A859 /* SavedMessage.swift */,
+				652B60A323EDC95D00BF2E90 /* MockMessage.swift */,
+				652B60A023EDC8C600BF2E90 /* MockUser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		652C7B7A2587E6E80027A859 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6506474D23ECC7DB00E914D7 /* Main.storyboard */,
+				658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		652C7B7E2587E7850027A859 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				6536739A23F72AC100207269 /* MainViewController.swift */,
 				6514B6A724123DD900B999FD /* EmptyViewController.swift */,
 				652B607B23ECD8EE00BF2E90 /* ChatViewController.swift */,
 				65CC1E3A2460433A00412334 /* PopupViewController.swift */,
 				654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */,
-				658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */,
-				6597C4842475675400BE853B /* SettingsTableViewController.swift */,
-				6506474D23ECC7DB00E914D7 /* Main.storyboard */,
-				6506475023ECC7DC00E914D7 /* Assets.xcassets */,
-				6506475223ECC7DC00E914D7 /* LaunchScreen.storyboard */,
-				6506475523ECC7DC00E914D7 /* Info.plist */,
-				65212D4B2417E01C00585678 /* GoogleService-Info.plist */,
-				652B60A323EDC95D00BF2E90 /* MockMessage.swift */,
-				652B60A023EDC8C600BF2E90 /* MockUser.swift */,
-				652B60A723EF784C00BF2E90 /* Tab.swift */,
-				65773FAB246A62BC0011DEFF /* Localizable.strings */,
-				65773FB0246A67830011DEFF /* InfoPlist.strings */,
 			);
-			path = ChatMemo;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E37489FB0C9AA5A8073238A9 /* Frameworks */ = {
@@ -159,7 +186,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = "中川翼";
 				TargetAttributes = {
 					6506474323ECC7DB00E914D7 = {
@@ -275,6 +302,7 @@
 				652B60A423EDC95E00BF2E90 /* MockMessage.swift in Sources */,
 				658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */,
 				6597C4852475675400BE853B /* SettingsTableViewController.swift in Sources */,
+				652C7B7C2587E72B0027A859 /* SavedMessage.swift in Sources */,
 				652B60A223EDC8C700BF2E90 /* MockUser.swift in Sources */,
 				65CC1E3B2460433A00412334 /* PopupViewController.swift in Sources */,
 				6506474A23ECC7DB00E914D7 /* SceneDelegate.swift in Sources */,
@@ -348,6 +376,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -409,6 +438,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

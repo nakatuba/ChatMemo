@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FIRCLSConstants.h"
+#import "Crashlytics/Shared/FIRCLSConstants.h"
+#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
 
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
 NSString* const FIRCLSDeveloperToken = @"77f0789d8e230eccdb4b99b82dccd78d47f9b604";
-
-NSString* const FIRCLSVersion = @STR(DISPLAY_VERSION);
 
 // User Messages
 NSString* const FIRCLSMissingConsumerKeyMsg = @"consumer key is nil or zero length";
@@ -30,7 +29,7 @@ NSString* const FIRCLSException = @"FIRCLSException";
 
 // Endpoints
 NSString* const FIRCLSSettingsEndpoint = @"https://firebase-settings.crashlytics.com";
-NSString* const FIRCLSConfigureEndpoint = @"https://api.crashlytics.com";
+NSString* const FIRCLSConfigureEndpoint = @"https://update.crashlytics.com";
 NSString* const FIRCLSReportsEndpoint = @"https://reports.crashlytics.com";
 
 // Network requests
@@ -47,3 +46,15 @@ NSString* const FIRCLSNetworkCrashlyticsGoogleAppId = @"X-Crashlytics-Google-App
 NSString* const FIRCLSNetworkCrashlyticsOrgId = @"X-Crashlytics-Org-Id";
 NSString* const FIRCLSNetworkUserAgent = @"User-Agent";
 NSString* const FIRCLSNetworkUTF8 = @"utf-8";
+
+NSString* FIRCLSSDKGeneratorName(void) {
+  return [NSString stringWithFormat:@"%s/%s", STR(CLS_SDK_NAME), FIRCLSSDKVersion().UTF8String];
+}
+
+NSString* FIRCLSSDKVersion(void) {
+#ifdef CRASHLYTICS_1P
+  return [FIRFirebaseVersion() stringByAppendingString:@"_1P"];
+#else
+  return FIRFirebaseVersion();
+#endif
+}
