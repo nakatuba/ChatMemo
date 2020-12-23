@@ -9,7 +9,8 @@
 import RealmSwift
 
 class SavedMessage: Object {
-    @objc dynamic var text: String? = nil
-    @objc dynamic var image: Data? = nil
-    @objc dynamic var date: Date! = nil
+    @objc dynamic var text: String?
+    @objc dynamic var image: Data?
+    @objc dynamic var date: Date = Date()
+    @objc dynamic var strikethrough = false
 }

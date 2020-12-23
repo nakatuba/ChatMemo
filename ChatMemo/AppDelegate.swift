@@ -20,6 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
+        // マイグレーション
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                    
+                    var order = 0
+                    migration.enumerateObjects(ofType: Tab.className()) { oldObject, newObject in
+                        newObject!["order"] = order
+                        order += 1
+                    }
+                    
+                    migration.enumerateObjects(ofType: SavedMessage.className()) { oldObject, newObject in
+                        newObject!["date"] = oldObject!["date"]
+                    }
+                }
+            })
+        
         let key = "startUpCount"
         UserDefaults.standard.set(UserDefaults.standard.integer(forKey: key) + 1, forKey: key)
         let count = UserDefaults.standard.integer(forKey: key)

@@ -10,5 +10,6 @@ import RealmSwift
 
 class Tab: Object {
     @objc dynamic var name = ""
+    @objc dynamic var order = 0
     let savedMessageList = List<SavedMessage>()
 }

@@ -12,28 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <FirebaseAnalyticsInterop/FIRAnalyticsInterop.h>
+#import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
 
-#import "FIRCLSApplication.h"
-#import "FIRCLSDataCollectionArbiter.h"
-#import "FIRCLSDataCollectionToken.h"
-#import "FIRCLSDefines.h"
-#import "FIRCLSFCRAnalytics.h"
-#import "FIRCLSFileManager.h"
-#import "FIRCLSInstallIdentifierModel.h"
-#import "FIRCLSInternalReport.h"
-#import "FIRCLSNetworkClient.h"
-#import "FIRCLSPackageReportOperation.h"
-#import "FIRCLSProcessReportOperation.h"
-#import "FIRCLSReportUploader_Private.h"
-#import "FIRCLSSettings.h"
-#import "FIRCLSSymbolResolver.h"
+#import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSNetworkClient.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
+#import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
+#import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSFCRAnalytics.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSInstallIdentifierModel.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSSymbolResolver.h"
+#import "Crashlytics/Crashlytics/Models/Record/FIRCLSReportAdapter.h"
+#import "Crashlytics/Crashlytics/Operations/Reports/FIRCLSPackageReportOperation.h"
+#import "Crashlytics/Crashlytics/Operations/Reports/FIRCLSProcessReportOperation.h"
 
-#include "FIRCLSUtility.h"
+#include "Crashlytics/Crashlytics/Helpers/FIRCLSUtility.h"
 
-#import "FIRCLSConstants.h"
-#import "FIRCLSMultipartMimeStreamEncoder.h"
-#import "FIRCLSURLBuilder.h"
+#import "Crashlytics/Shared/FIRCLSConstants.h"
+#import "Crashlytics/Shared/FIRCLSNetworking/FIRCLSMultipartMimeStreamEncoder.h"
+#import "Crashlytics/Shared/FIRCLSNetworking/FIRCLSURLBuilder.h"
+
+#import "GoogleDataTransport/GDTCORLibrary/Internal/GoogleDataTransportInternal.h"
 
 @interface FIRCLSReportUploader () {
   id<FIRAnalyticsInterop> _analytics;
@@ -63,67 +66,6 @@
   return self;
 }
 
-#pragma mark - Properties
-
-- (NSURL *)reportURL {
-  FIRCLSURLBuilder *url = [FIRCLSURLBuilder URLWithBase:FIRCLSReportsEndpoint];
-
-  [url appendComponent:@"/sdk-api/v1/platforms/"];
-  [url appendComponent:FIRCLSApplicationGetPlatform()];
-  [url appendComponent:@"/apps/"];
-  [url appendComponent:self.dataSource.settings.fetchedBundleID];
-  [url appendComponent:@"/reports"];
-
-  return [url URL];
-}
-
-- (NSString *)localeIdentifier {
-  return [[NSLocale currentLocale] localeIdentifier];
-}
-
-#pragma mark - URL Requests
-- (NSMutableURLRequest *)mutableRequestWithURL:(NSURL *)url timeout:(NSTimeInterval)timeout {
-  NSMutableURLRequest *request =
-      [NSMutableURLRequest requestWithURL:url
-                              cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                          timeoutInterval:timeout];
-
-  NSString *localeId = [self localeIdentifier];
-
-  [request setValue:@CLS_SDK_GENERATOR_NAME forHTTPHeaderField:FIRCLSNetworkUserAgent];
-  [request setValue:FIRCLSNetworkApplicationJson forHTTPHeaderField:FIRCLSNetworkAccept];
-  [request setValue:FIRCLSNetworkUTF8 forHTTPHeaderField:FIRCLSNetworkAcceptCharset];
-  [request setValue:localeId forHTTPHeaderField:FIRCLSNetworkAcceptLanguage];
-  [request setValue:localeId forHTTPHeaderField:FIRCLSNetworkContentLanguage];
-  [request setValue:FIRCLSDeveloperToken forHTTPHeaderField:FIRCLSNetworkCrashlyticsDeveloperToken];
-  [request setValue:FIRCLSApplicationGetSDKBundleID()
-      forHTTPHeaderField:FIRCLSNetworkCrashlyticsAPIClientId];
-  [request setValue:@CLS_SDK_DISPLAY_VERSION
-      forHTTPHeaderField:FIRCLSNetworkCrashlyticsAPIClientDisplayVersion];
-  [request setValue:[[self dataSource] googleAppID]
-      forHTTPHeaderField:FIRCLSNetworkCrashlyticsGoogleAppId];
-
-  return request;
-}
-
-- (BOOL)fillInRequest:(NSMutableURLRequest *)request forMultipartMimeDataAtPath:(NSString *)path {
-  NSString *boundary = [[path lastPathComponent] stringByDeletingPathExtension];
-
-  [request setValue:[FIRCLSMultipartMimeStreamEncoder
-                        contentTypeHTTPHeaderValueWithBoundary:boundary]
-      forHTTPHeaderField:@"Content-Type"];
-
-  NSNumber *fileSize = [[self fileManager] fileSizeAtPath:path];
-  if (fileSize == nil) {
-    FIRCLSErrorLog(@"Could not determine size of multipart mime file");
-    return NO;
-  }
-
-  [request setValue:[fileSize stringValue] forHTTPHeaderField:@"Content-Length"];
-
-  return YES;
-}
-
 #pragma mark - Packaging and Submission
 - (BOOL)prepareAndSubmitReport:(FIRCLSInternalReport *)report
            dataCollectionToken:(FIRCLSDataCollectionToken *)dataCollectionToken
@@ -136,18 +78,18 @@
     return NO;
   }
 
-  NSString *reportOrgID = self.dataSource.settings.orgID;
-  if (!reportOrgID) {
-    FIRCLSDebugLog(@"Skipping report with id '%@' this run of the app because Organization ID was "
-                   @"nil. Report will upload once settings are download successfully",
-                   report.identifier);
+  if (!self.dataSource.settings.orgID && !self.dataSource.settings.shouldUseNewReportEndpoint) {
+    FIRCLSDebugLog(
+        @"Skipping report with id '%@' this run of the app because Organization ID was "
+        @"nil. Report via the legacy endpoint will upload once settings are download successfully",
+        report.identifier);
     return YES;
   }
 
   FIRCLSApplicationActivity(
       FIRCLSApplicationActivityDefault, @"Crashlytics Crash Report Processing", ^{
         if (shouldProcess) {
-          if (![self.fileManager moveItemAtPath:[report path]
+          if (![self.fileManager moveItemAtPath:report.path
                                     toDirectory:self.fileManager.processingPath]) {
             FIRCLSErrorLog(@"Unable to move report for processing");
             return;
@@ -165,26 +107,42 @@
           [processOperation start];
         }
 
-        FIRCLSPackageReportOperation *packageOperation =
-            [[FIRCLSPackageReportOperation alloc] initWithReport:report
-                                                     fileManager:self.fileManager
-                                                        settings:self.dataSource.settings];
+        NSString *packagedPath;
 
-        [packageOperation start];
+        FIRCLSDebugLog(@"Preparing the report for the new endpoint: %d",
+                       self.dataSource.settings.shouldUseNewReportEndpoint);
 
-        NSString *packagedPath = [packageOperation finalPath];
-        if (!packagedPath) {
-          FIRCLSErrorLog(@"Unable to package report");
-          return;
-        }
-
-        // Save the crashed on date for potential scion event sending.
-        NSTimeInterval crashedOnDate = report.crashedOnDate.timeIntervalSince1970;
-        // We only want to forward crash events to scion, storing this for later use.
+        // With the new report endpoint, the report is deleted once it is written to GDT
+        // Check if the report has a crash file before the report is moved or deleted
         BOOL isCrash = report.isCrash;
 
-        if (![[self fileManager] removeItemAtPath:[report path]]) {
-          FIRCLSErrorLog(@"Unable to remove a processing item");
+        if (self.dataSource.settings.shouldUseNewReportEndpoint) {
+          // For the new endpoint, just move the .clsrecords from "processing" -> "prepared"
+          if (![self.fileManager moveItemAtPath:report.path
+                                    toDirectory:self.fileManager.preparedPath]) {
+            FIRCLSErrorLog(@"Unable to move report to prepared");
+            return;
+          }
+
+          packagedPath = [self.fileManager.preparedPath
+              stringByAppendingPathComponent:report.path.lastPathComponent];
+        } else {
+          // For the legacy endpoint, continue generate the multipartmime file in "prepared-legacy"
+          FIRCLSPackageReportOperation *packageOperation =
+              [[FIRCLSPackageReportOperation alloc] initWithReport:report
+                                                       fileManager:self.fileManager
+                                                          settings:self.dataSource.settings];
+
+          [packageOperation start];
+          packagedPath = packageOperation.finalPath;
+          if (!packagedPath) {
+            FIRCLSErrorLog(@"Unable to package report");
+            return;
+          }
+
+          if (![self.fileManager removeItemAtPath:report.path]) {
+            FIRCLSErrorLog(@"Unable to remove a processing item");
+          }
         }
 
         NSLog(@"[Firebase/Crashlytics] Packaged report with id '%@' for submission",
@@ -194,9 +152,11 @@
                                dataCollectionToken:dataCollectionToken
                                           asUrgent:urgent];
 
-        // If the upload was successful and the report contained a crash forward it to scion.
+        // If the upload was successful and the report contained a crash forward it to Google
+        // Analytics.
         if (success && isCrash) {
-          [FIRCLSFCRAnalytics logCrashWithTimeStamp:crashedOnDate toAnalytics:self->_analytics];
+          [FIRCLSFCRAnalytics logCrashWithTimeStamp:report.crashedOnDate.timeIntervalSince1970
+                                        toAnalytics:self->_analytics];
         }
       });
 
@@ -243,9 +203,69 @@
                           asUrgent:(BOOL)urgent {
   FIRCLSDeveloperLog("Crashlytics:Crash:Reports", @"Submitting report%@",
                      urgent ? @" as urgent" : @"");
-  return [self submitPackageMultipartMimeAtPath:path
-                            dataCollectionToken:dataCollectionToken
-                                  synchronously:urgent];
+
+  // Check with the legacy path as the new path will always be contained in the legacy path
+  BOOL isNewPreparedPath = ![path containsString:self.fileManager.legacyPreparedPath];
+
+  if (isNewPreparedPath && self.dataSource.settings.shouldUseNewReportEndpoint) {
+    if (![dataCollectionToken isValid]) {
+      FIRCLSErrorLog(@"A report upload was requested with an invalid data collection token.");
+      return NO;
+    }
+
+    FIRCLSReportAdapter *adapter =
+        [[FIRCLSReportAdapter alloc] initWithPath:path googleAppId:self.dataSource.googleAppID];
+
+    GDTCOREvent *event = [self.dataSource.googleTransport eventForTransport];
+    event.dataObject = adapter;
+    event.qosTier = GDTCOREventQoSFast;  // Bypass batching, send immediately
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+    __block BOOL success = YES;
+
+    [self.dataSource.googleTransport
+        sendDataEvent:event
+           onComplete:^(BOOL wasWritten, NSError *error) {
+             if (!wasWritten) {
+               FIRCLSDeveloperLog("Crashlytics:Crash:Reports",
+                                  @"Failed to send crash report due to gdt write failure.");
+               success = NO;
+               return;
+             }
+
+             if (error) {
+               FIRCLSDeveloperLog("Crashlytics:Crash:Reports",
+                                  @"Failed to send crash report due to gdt error: %@",
+                                  error.localizedDescription);
+               success = NO;
+               return;
+             }
+
+             FIRCLSDeveloperLog("Crashlytics:Crash:Reports",
+                                @"Completed report submission with id: %@", path.lastPathComponent);
+
+             if (urgent) {
+               dispatch_semaphore_signal(semaphore);
+             }
+
+             [self cleanUpSubmittedReportAtPath:path];
+           }];
+
+    if (urgent) {
+      dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    }
+
+    return success;
+
+  } else if (!isNewPreparedPath && !self.dataSource.settings.shouldUseNewReportEndpoint) {
+    return [self submitPackageMultipartMimeAtPath:path
+                              dataCollectionToken:dataCollectionToken
+                                    synchronously:urgent];
+  }
+
+  // Unsupported state
+  return NO;
 }
 
 - (BOOL)cleanUpSubmittedReportAtPath:(NSString *)path {
@@ -269,6 +289,67 @@
   [[self delegate] didCompletePackageSubmission:path
                             dataCollectionToken:dataCollectionToken
                                           error:error];
+}
+
+#pragma mark - Properties (TODO: Can delete once the experiment is over)
+
+- (NSURL *)reportURL {
+  FIRCLSURLBuilder *url = [FIRCLSURLBuilder URLWithBase:FIRCLSReportsEndpoint];
+
+  [url appendComponent:@"/sdk-api/v1/platforms/"];
+  [url appendComponent:FIRCLSApplicationGetPlatform()];
+  [url appendComponent:@"/apps/"];
+  [url appendComponent:self.dataSource.settings.fetchedBundleID];
+  [url appendComponent:@"/reports"];
+
+  return [url URL];
+}
+
+- (NSString *)localeIdentifier {
+  return [[NSLocale currentLocale] localeIdentifier];
+}
+
+#pragma mark - URL Requests
+- (NSMutableURLRequest *)mutableRequestWithURL:(NSURL *)url timeout:(NSTimeInterval)timeout {
+  NSMutableURLRequest *request =
+      [NSMutableURLRequest requestWithURL:url
+                              cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                          timeoutInterval:timeout];
+
+  NSString *localeId = [self localeIdentifier];
+
+  [request setValue:FIRCLSSDKGeneratorName() forHTTPHeaderField:FIRCLSNetworkUserAgent];
+  [request setValue:FIRCLSNetworkApplicationJson forHTTPHeaderField:FIRCLSNetworkAccept];
+  [request setValue:FIRCLSNetworkUTF8 forHTTPHeaderField:FIRCLSNetworkAcceptCharset];
+  [request setValue:localeId forHTTPHeaderField:FIRCLSNetworkAcceptLanguage];
+  [request setValue:localeId forHTTPHeaderField:FIRCLSNetworkContentLanguage];
+  [request setValue:FIRCLSDeveloperToken forHTTPHeaderField:FIRCLSNetworkCrashlyticsDeveloperToken];
+  [request setValue:FIRCLSApplicationGetSDKBundleID()
+      forHTTPHeaderField:FIRCLSNetworkCrashlyticsAPIClientId];
+  [request setValue:FIRCLSSDKVersion()
+      forHTTPHeaderField:FIRCLSNetworkCrashlyticsAPIClientDisplayVersion];
+  [request setValue:[[self dataSource] googleAppID]
+      forHTTPHeaderField:FIRCLSNetworkCrashlyticsGoogleAppId];
+
+  return request;
+}
+
+- (BOOL)fillInRequest:(NSMutableURLRequest *)request forMultipartMimeDataAtPath:(NSString *)path {
+  NSString *boundary = [[path lastPathComponent] stringByDeletingPathExtension];
+
+  [request setValue:[FIRCLSMultipartMimeStreamEncoder
+                        contentTypeHTTPHeaderValueWithBoundary:boundary]
+      forHTTPHeaderField:@"Content-Type"];
+
+  NSNumber *fileSize = [[self fileManager] fileSizeAtPath:path];
+  if (fileSize == nil) {
+    FIRCLSErrorLog(@"Could not determine size of multipart mime file");
+    return NO;
+  }
+
+  [request setValue:[fileSize stringValue] forHTTPHeaderField:@"Content-Length"];
+
+  return YES;
 }
 
 @end
