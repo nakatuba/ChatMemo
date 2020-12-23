@@ -62,7 +62,9 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.backgroundColor = UIColor(red: 120/255, green: 180/255, blue: 240/255, alpha: 1)
+        
         messageInputBar.delegate = self
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.textColor = .black
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
@@ -71,6 +73,7 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 20.0
         messageInputBar.sendButton.setImage(UIImage(named: "send"), for: .normal)
+        
         scrollsToBottomOnKeyboardBeginsEditing = true
         maintainPositionOnKeyboardFrameChanged = true
         
@@ -101,15 +104,6 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: insets))
             layout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: insets))
         }
-        
-//        for savedMessage in savedMessageList {
-//            insertMessage(text: savedMessage.text, image: savedMessage.image, date: savedMessage.date)
-//            messagesCollectionView.scrollToBottom()
-//        }
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-        tapGesture.delegate = self
-        messagesCollectionView.addGestureRecognizer(tapGesture)
         
         let editMenuItem = UIMenuItem(title: NSLocalizedString("Edit", comment: ""),
                                       action: #selector(MessageCollectionViewCell.editMessage(_:)))
@@ -187,19 +181,6 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func tapped(_ sender: UITapGestureRecognizer){
-        if sender.state == .ended {
-            messageInputBar.inputTextView.resignFirstResponder()
-        }
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if otherGestureRecognizer is UILongPressGestureRecognizer {
-            return false
-        }
-        return true
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         switch action {
         case NSSelectorFromString("editMessage:"):
@@ -254,7 +235,7 @@ extension ChatViewController: IndicatorInfoProvider {
 extension ChatViewController: MessagesDataSource {
     
     func currentSender() -> SenderType {
-        return Sender(id: "", displayName: "")
+        return MockUser(senderId: "", displayName: "")
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -334,6 +315,10 @@ extension ChatViewController: MessagesDisplayDelegate {
 }
 
 extension ChatViewController: MessageCellDelegate {
+    
+    func didTapBackground(in cell: MessageCollectionViewCell) {
+        messageInputBar.inputTextView.resignFirstResponder()
+    }
     
     func didTapImage(in cell: MessageCollectionViewCell) {
         messageInputBar.inputTextView.resignFirstResponder()
