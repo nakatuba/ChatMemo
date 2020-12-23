@@ -13,22 +13,47 @@ import RealmSwift
 import XLPagerTabStrip
 import SKPhotoBrowser
 
-class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: MessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var tabIndex = 0
-    var messageList: [MockMessage] = []
+    let realm = try! Realm()
+    var savedMessageList: List<SavedMessage>!
+    var currentTab: Tab! {
+        didSet {
+            savedMessageList = currentTab.savedMessageList
+        }
+    }
+    
+    var messageList: [MockMessage] {
+        return savedMessageList.compactMap { savedMessage in
+            let user = MockUser(senderId: "", displayName: "")
+            let messageId = UUID().uuidString
+            let date = savedMessage.date
+            
+            if let text = savedMessage.text {
+                return MockMessage(text: text,  user: user, messageId: messageId, date: date)
+            } else if let data = savedMessage.image, let image = UIImage(data: data) {
+                return MockMessage(image: image,  user: user, messageId: messageId, date: date)
+            }
+            
+            return nil
+        }
+    }
+    
+    var images: [SKPhoto] {
+        return savedMessageList.compactMap { savedMessage in
+            if let data = savedMessage.image, let image = UIImage(data: data) {
+                return SKPhoto.photoWithImage(image)
+            }
+            
+            return nil
+        }
+    }
     
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: NSLocalizedString("en_US", comment: ""))
         return formatter
     }()
-    
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        return IndicatorInfo(title: tabObjects[tabIndex].name)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,12 +102,10 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
             layout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: insets))
         }
         
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        for savedMessage in tabObjects[tabIndex].savedMessageList {
-            insertMessage(text: savedMessage.text, image: savedMessage.image, date: savedMessage.date)
-            messagesCollectionView.scrollToBottom()
-        }
+//        for savedMessage in savedMessageList {
+//            insertMessage(text: savedMessage.text, image: savedMessage.image, date: savedMessage.date)
+//            messagesCollectionView.scrollToBottom()
+//        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         tapGesture.delegate = self
@@ -102,38 +125,19 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         becomeFirstResponder()
     }
     
-    func insertMessage(text: String?, image: Data?, date: Date) {
-        let user = MockUser(senderId: "", displayName: "")
-        
-        if let text = text {
-            let message = MockMessage(text: text,  user: user, messageId: UUID().uuidString, date: date)
-            messageList.append(message)
-        } else if let data = image, let image = UIImage(data: data) {
-            let message = MockMessage(image: image,  user: user, messageId: UUID().uuidString, date: date)
-            messageList.append(message)
-        }
-        
-        messagesCollectionView.reloadData()
-    }
-    
     func isDateLabelVisible(at indexPath: IndexPath) -> Bool {
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        
         var lastMessageDate = ""
         var thisMessageDate = ""
         
         formatter.dateStyle = .short
         formatter.timeStyle = .none
         
-        if tabIndex < tabObjects.count {
-            if indexPath.section > 0, indexPath.section - 1 < tabObjects[tabIndex].savedMessageList.count {
-                lastMessageDate = formatter.string(from: tabObjects[tabIndex].savedMessageList[indexPath.section - 1].date)
-            }
-            
-            if indexPath.section < tabObjects[tabIndex].savedMessageList.count {
-                thisMessageDate = formatter.string(from: tabObjects[tabIndex].savedMessageList[indexPath.section].date)
-            }
+        if indexPath.section > 0, indexPath.section - 1 < savedMessageList.count {
+            lastMessageDate = formatter.string(from: savedMessageList[indexPath.section - 1].date)
+        }
+        
+        if indexPath.section < savedMessageList.count {
+            thisMessageDate = formatter.string(from: savedMessageList[indexPath.section].date)
         }
         
         return lastMessageDate != thisMessageDate
@@ -199,12 +203,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         switch action {
         case NSSelectorFromString("editMessage:"):
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            if tabObjects[tabIndex].savedMessageList[indexPath.section].text == nil {
-                return false
-            }
-            return true
+            return savedMessageList[indexPath.section].text != nil
         case NSSelectorFromString("copyMessage:"):
             return true
         case NSSelectorFromString("deleteMessage:"):
@@ -220,24 +219,22 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
             messageInputBar.inputTextView.resignFirstResponder()
             scrollsToBottomOnKeyboardBeginsEditing = false
             maintainPositionOnKeyboardFrameChanged = false
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Edit") as! PopupViewController
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let popupVC = storyboard.instantiateViewController(withIdentifier: "Popup") as! PopupViewController
             popupVC.modalPresentationStyle = .overFullScreen
             popupVC.modalTransitionStyle = .crossDissolve
-            popupVC.messageIndex = indexPath.section
-            popupVC.messageText = tabObjects[tabIndex].savedMessageList[indexPath.section].text ?? ""
+            popupVC.savedMessage = savedMessageList[indexPath.section]
             present(popupVC, animated: true, completion: nil)
         case NSSelectorFromString("copyMessage:"):
             super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
         case NSSelectorFromString("deleteMessage:"):
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            let savedMessage = tabObjects[tabIndex].savedMessageList[indexPath.section]
+            let savedMessage = savedMessageList[indexPath.section]
+            
             try! realm.write {
                 realm.delete(savedMessage)
             }
-            messageList.remove(at: indexPath.section)
+            
             messagesCollectionView.reloadData()
         default:
             break
@@ -246,39 +243,10 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
     
 }
 
-extension MessageCollectionViewCell {
+extension ChatViewController: IndicatorInfoProvider {
     
-    @objc func editMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("editMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
-        }
-    }
-    
-    @objc func copyMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("copyMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
-        }
-    }
-    
-    @objc func deleteMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("deleteMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
-        }
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: currentTab.name)
     }
     
 }
@@ -367,24 +335,14 @@ extension ChatViewController: MessagesDisplayDelegate {
 
 extension ChatViewController: MessageCellDelegate {
     
-    func didTapMessage(in cell: MessageCollectionViewCell) {
+    func didTapImage(in cell: MessageCollectionViewCell) {
         messageInputBar.inputTextView.resignFirstResponder()
+        
         if let collectionView = cell.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: cell) {
-                let realm = try! Realm()
-                let tabObjects = realm.objects(Tab.self)
-                if tabObjects[tabIndex].savedMessageList[indexPath.section].image != nil {
-                    var images = [SKPhoto]()
-                    for imageMessage in tabObjects[tabIndex].savedMessageList.filter({ $0.image != nil }) {
-                        guard let data = imageMessage.image else { return }
-                        guard let image = UIImage(data: data) else { return }
-                        let photo = SKPhoto.photoWithImage(image)
-                        images.append(photo)
-                    }
-                    let browser = SKPhotoBrowser(photos: images)
-                    browser.initializePageIndex(tabObjects[tabIndex].savedMessageList[0..<indexPath.section].filter({ $0.image != nil}).count)
-                    present(browser, animated: true, completion: {})
-                }
+                let browser = SKPhotoBrowser(photos: images)
+                browser.initializePageIndex(savedMessageList[0..<indexPath.section].compactMap({ $0.image }).count)
+                present(browser, animated: true, completion: nil)
             }
         }
     }
@@ -396,17 +354,17 @@ extension ChatViewController: MessageCellDelegate {
     
     func didSelectURL(_ url: URL) {
         messageInputBar.inputTextView.resignFirstResponder()
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        var title = NSLocalizedString("Open in Safari", comment: "")
         
-        if url.scheme == "mailto" {
-            title = NSLocalizedString("New message", comment: "")
-        }
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let title = url.scheme == "mailto"
+            ? NSLocalizedString("New message", comment: "")
+            : NSLocalizedString("Open in Safari", comment: "")
         
         let urlAction = UIAlertAction(title: title, style: .default, handler: { _ in
             UIApplication.shared.open(url)
             self.becomeFirstResponder()
         })
+        
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
             self.becomeFirstResponder()
         })
@@ -431,15 +389,12 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             } else if let image = component as? UIImage {
                 savedMessage.image = image.jpegData(compressionQuality: 1.0)
             }
-            savedMessage.date = Date()
             
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
             try! realm.write {
-                tabObjects[tabIndex].savedMessageList.append(savedMessage)
+                savedMessageList.append(savedMessage)
             }
             
-            insertMessage(text: savedMessage.text, image: savedMessage.image, date: savedMessage.date)
+            messagesCollectionView.reloadData()
             messagesCollectionView.scrollToBottom(animated: true)
         }
         

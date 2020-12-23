@@ -18,6 +18,9 @@ class TabManagementViewController: UIViewController {
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var bannerView: GADBannerView!
     
+    let realm = try! Realm()
+    var tabResults: Results<Tab>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addButton.layer.cornerRadius = 10.0
@@ -83,11 +86,11 @@ class TabManagementViewController: UIViewController {
         let changeAction = UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default, handler: { _ in
             let textField = alert.textFields![0]
             guard let text = textField.text, !text.isEmpty else { return }
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            try! realm.write {
-                tabObjects[indexPath.row].name = text
+            
+            try! self.realm.write {
+                self.tabResults[indexPath.row].name = text
             }
+            
             self.tableView.reloadData()
             self.loadTableHeight()
         })
@@ -112,19 +115,19 @@ class TabManagementViewController: UIViewController {
                                       message: NSLocalizedString("Are you sure you want to delete this tab?", comment: ""),
                                       preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: { _ in
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            guard let lastIndex = tabObjects.indices.last else { return }
-            try! realm.write {
+            guard let lastIndex = self.tabResults.indices.last else { return }
+            
+            try! self.realm.write {
                 for i in indexPath.row..<lastIndex {
-                    tabObjects[i].name = tabObjects[i + 1].name
-                    tabObjects[i].savedMessageList.removeAll()
-                    for savedMessage in tabObjects[i + 1].savedMessageList {
-                        tabObjects[i].savedMessageList.append(savedMessage)
+                    self.tabResults[i].name = self.tabResults[i + 1].name
+                    self.tabResults[i].savedMessageList.removeAll()
+                    for savedMessage in self.tabResults[i + 1].savedMessageList {
+                        self.tabResults[i].savedMessageList.append(savedMessage)
                     }
                 }
-                realm.delete(tabObjects[lastIndex])
+                self.realm.delete(self.tabResults[lastIndex])
             }
+            
             self.tableView.reloadData()
             self.loadTableHeight()
         })
@@ -155,52 +158,32 @@ extension TabManagementViewController: UITextFieldDelegate {
 extension TabManagementViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        return tabObjects.count
+        return tabResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        cell.textLabel?.text = tabObjects[indexPath.row].name
+        cell.textLabel?.text = tabResults[indexPath.row].name
         return cell
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
-        let sourceName = tabObjects[sourceIndexPath.row].name
-        let sourceSavedMessageList = List<SavedMessage>()
-        
-        for savedMessage in  tabObjects[sourceIndexPath.row].savedMessageList {
-            sourceSavedMessageList.append(savedMessage)
-        }
+        let sourceTab = tabResults[sourceIndexPath.row]
         
         try! realm.write {
             if sourceIndexPath.row < destinationIndexPath.row {
-                for i in sourceIndexPath.row..<destinationIndexPath.row {
-                    tabObjects[i].name = tabObjects[i + 1].name
-                    tabObjects[i].savedMessageList.removeAll()
-                    for savedMessage in tabObjects[i + 1].savedMessageList {
-                        tabObjects[i].savedMessageList.append(savedMessage)
-                    }
+                // 上から下にセルを移動
+                for index in sourceIndexPath.row...destinationIndexPath.row {
+                    tabResults[index].order -= 1
                 }
-            } else if destinationIndexPath.row < sourceIndexPath.row {
-                for i in (destinationIndexPath.row + 1...sourceIndexPath.row).reversed() {
-                    tabObjects[i].name = tabObjects[i - 1].name
-                    tabObjects[i].savedMessageList.removeAll()
-                    for savedMessage in tabObjects[i - 1].savedMessageList {
-                        tabObjects[i].savedMessageList.append(savedMessage)
-                    }
+            } else {
+                // 下から上にセルを移動
+                for index in (destinationIndexPath.row...sourceIndexPath.row).reversed() {
+                    tabResults[index].order += 1
                 }
             }
-            tabObjects[destinationIndexPath.row].name = sourceName
-            tabObjects[destinationIndexPath.row].savedMessageList.removeAll()
-            for savedMessage in sourceSavedMessageList {
-                tabObjects[destinationIndexPath.row].savedMessageList.append(savedMessage)
-            }
+            
+            sourceTab.order = destinationIndexPath.row
         }
     }
     
@@ -226,14 +209,16 @@ extension TabManagementViewController {
         if let text = textField.text, !text.isEmpty {
             let tab = Tab()
             tab.name = text
-            let realm = try! Realm()
+            
             try! realm.write {
                 realm.add(tab)
             }
+            
             textField.text = ""
             tableView.reloadData()
             loadTableHeight()
         }
+        
         textField.resignFirstResponder()
     }
     

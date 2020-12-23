@@ -11,19 +11,21 @@ import RealmSwift
 
 class PopupViewController: UIViewController {
     
-    let topBorder = CALayer()
-    let centerBorder = CALayer()
-    var messageIndex = 0
-    var messageText = ""
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
+    let topBorder = CALayer()
+    let centerBorder = CALayer()
+    
+    let realm = try! Realm()
+    var savedMessage: SavedMessage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         popupView.layer.cornerRadius = 10
-        textView.text = messageText
+        textView.text = savedMessage.text
         textView.layer.cornerRadius = 10
         topBorder.backgroundColor = UIColor.secondaryLabel.cgColor
         cancelButton.layer.addSublayer(topBorder)
@@ -41,18 +43,13 @@ class PopupViewController: UIViewController {
         let naviVC = presentingViewController as! UINavigationController
         let mainVC = naviVC.viewControllers[0] as! MainViewController
         let chatVC = mainVC.children[0] as! ChatViewController
-        let realm = try! Realm()
-        let tabObjects = realm.objects(Tab.self)
         
         guard let text = textView.text, !text.isEmpty else { return }
+        
         try! realm.write {
-            tabObjects[chatVC.tabIndex].savedMessageList[messageIndex].text = text
+            savedMessage.text = text
         }
-        chatVC.messageList[messageIndex] = MockMessage(
-            text: text,
-            user: MockUser(senderId: "", displayName: ""),
-            messageId: UUID().uuidString,
-            date: tabObjects[chatVC.tabIndex].savedMessageList[messageIndex].date)
+        
         chatVC.messagesCollectionView.reloadData()
         dismiss(animated: true, completion: nil)
         chatVC.scrollsToBottomOnKeyboardBeginsEditing = true
