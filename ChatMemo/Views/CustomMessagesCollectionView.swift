@@ -17,10 +17,8 @@ class CustomMessagesCollectionView: MessagesCollectionView {
     var customMessagesCollectionViewDelegate: CustomMessagesCollectionViewDelegate?
     
     override func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        if gesture.state == .ended {
-            customMessagesCollectionViewDelegate?.didTap()
-        }
         super.handleTapGesture(gesture)
+        customMessagesCollectionViewDelegate?.didTap()
     }
     
 }

@@ -332,6 +332,8 @@ extension ChatViewController: MessagesDisplayDelegate {
 extension ChatViewController: MessageCellDelegate {
     
     func didTapImage(in cell: MessageCollectionViewCell) {
+        messageInputBar.inputTextView.resignFirstResponder()
+        
         if let collectionView = cell.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: cell) {
                 let browser = SKPhotoBrowser(photos: images)
@@ -347,6 +349,8 @@ extension ChatViewController: MessageCellDelegate {
     }
     
     func didSelectURL(_ url: URL) {
+        messageInputBar.inputTextView.resignFirstResponder()
+        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let title = url.scheme == "mailto" ? "New message" : "Open in Safari"
         let urlAction = UIAlertAction(title: NSLocalizedString(title, comment: ""), style: .default) { _ in
