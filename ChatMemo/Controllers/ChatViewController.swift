@@ -30,6 +30,16 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
             let date = savedMessage.date
             
             if let text = savedMessage.text {
+                if savedMessage.strikethrough {
+                    let attributes: [NSAttributedString.Key : Any] = [
+                        .font : UIFont.preferredFont(forTextStyle: .body),
+                        .strikethroughStyle : NSUnderlineStyle.thick.rawValue
+                    ]
+                    let attributedString = NSAttributedString(string: text, attributes: attributes)
+                    
+                    return MockMessage(attributedText: attributedString, user: user, messageId: messageId, date: date)
+                }
+                
                 return MockMessage(text: text, user: user, messageId: messageId, date: date)
             } else if let data = savedMessage.image, let image = UIImage(data: data) {
                 return MockMessage(image: image, user: user, messageId: messageId, date: date)
@@ -106,11 +116,13 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
         
         let editMenuItem = UIMenuItem(title: NSLocalizedString("Edit", comment: ""),
                                       action: #selector(MessageCollectionViewCell.editMessage(_:)))
+        let strikethroughMenuItem = UIMenuItem(title: NSLocalizedString("Strikethrough", comment: ""),
+                                      action: #selector(MessageCollectionViewCell.drawStrikethrough(_:)))
         let copyMenuItem = UIMenuItem(title: NSLocalizedString("Copy", comment: ""),
                                       action: #selector(MessageCollectionViewCell.copyMessage(_:)))
         let deleteMenuItem = UIMenuItem(title: NSLocalizedString("Delete", comment: ""),
                                         action: #selector(MessageCollectionViewCell.deleteMessage(_:)))
-        UIMenuController.shared.menuItems = [editMenuItem, copyMenuItem, deleteMenuItem]
+        UIMenuController.shared.menuItems = [editMenuItem, strikethroughMenuItem, copyMenuItem, deleteMenuItem]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,11 +155,11 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
                 $0.image = UIImage(systemName: systemName)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 25, height: 40), animated: false)
                 $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
-        }.onSelected {
-            $0.tintColor = .lightGray
-        }.onDeselected {
-            $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
-        }
+            }.onSelected {
+                $0.tintColor = .lightGray
+            }.onDeselected {
+                $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
+            }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])  {
@@ -184,6 +196,8 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
         switch action {
         case NSSelectorFromString("editMessage:"):
             return savedMessageList[indexPath.section].text != nil
+        case NSSelectorFromString("drawStrikethrough:"):
+            return savedMessageList[indexPath.section].text != nil
         case NSSelectorFromString("copyMessage:"):
             return true
         case NSSelectorFromString("deleteMessage:"):
@@ -206,13 +220,17 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.savedMessage = savedMessageList[indexPath.section]
             present(popupVC, animated: true, completion: nil)
+        case NSSelectorFromString("drawStrikethrough:"):
+            try! realm.write {
+                savedMessageList[indexPath.section].strikethrough = !savedMessageList[indexPath.section].strikethrough
+            }
+            
+            messagesCollectionView.reloadData()
         case NSSelectorFromString("copyMessage:"):
             super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
         case NSSelectorFromString("deleteMessage:"):
-            let savedMessage = savedMessageList[indexPath.section]
-            
             try! realm.write {
-                realm.delete(savedMessage)
+                savedMessageList.remove(at: indexPath.section)
             }
             
             messagesCollectionView.reloadData()

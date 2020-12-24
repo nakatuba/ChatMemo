@@ -11,7 +11,7 @@ import MessageKit
 extension MessageCollectionViewCell {
     
     @objc func editMessage(_ sender: Any?) {
-        if let collectionView = superview as? UICollectionView {
+        if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
                 collectionView.delegate?.collectionView?(collectionView,
                                                          performAction: NSSelectorFromString("editMessage:"),
@@ -21,8 +21,19 @@ extension MessageCollectionViewCell {
         }
     }
     
+    @objc func drawStrikethrough(_ sender: Any?) {
+        if let collectionView = self.superview as? UICollectionView {
+            if let indexPath = collectionView.indexPath(for: self) {
+                collectionView.delegate?.collectionView?(collectionView,
+                                                         performAction: NSSelectorFromString("drawStrikethrough:"),
+                                                         forItemAt: indexPath,
+                                                         withSender: sender)
+            }
+        }
+    }
+    
     @objc func copyMessage(_ sender: Any?) {
-        if let collectionView = superview as? UICollectionView {
+        if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
                 collectionView.delegate?.collectionView?(collectionView,
                                                          performAction: NSSelectorFromString("copyMessage:"),
@@ -33,7 +44,7 @@ extension MessageCollectionViewCell {
     }
     
     @objc func deleteMessage(_ sender: Any?) {
-        if let collectionView = superview as? UICollectionView {
+        if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
                 collectionView.delegate?.collectionView?(collectionView,
                                                          performAction: NSSelectorFromString("deleteMessage:"),
