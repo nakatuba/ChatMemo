@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1) {
-                    
                     var order = 0
                     migration.enumerateObjects(ofType: Tab.className()) { oldObject, newObject in
                         newObject!["order"] = order

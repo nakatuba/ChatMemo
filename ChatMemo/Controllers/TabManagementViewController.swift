@@ -83,17 +83,11 @@ class TabManagementViewController: UIViewController {
         let alert = UIAlertController(title: String(format: NSLocalizedString("Rename \"%@\"", comment: ""), tabName),
                                       message: nil,
                                       preferredStyle: .alert)
-        let changeAction = UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default, handler: { _ in
+        let changeAction = UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default) { _ in
             let textField = alert.textFields![0]
             guard let text = textField.text, !text.isEmpty else { return }
-            
-            try! self.realm.write {
-                self.tabResults[indexPath.row].name = text
-            }
-            
-            self.tableView.reloadData()
-            self.loadTableHeight()
-        })
+            self.renameTab(at: indexPath, newName: text)
+        }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         
         alert.addTextField(configurationHandler: { textField in
@@ -114,23 +108,9 @@ class TabManagementViewController: UIViewController {
         let alert = UIAlertController(title: String(format: NSLocalizedString("Delete \"%@\"", comment: ""), tabName),
                                       message: NSLocalizedString("Are you sure you want to delete this tab?", comment: ""),
                                       preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: { _ in
-            guard let lastIndex = self.tabResults.indices.last else { return }
-            
-            try! self.realm.write {
-                for i in indexPath.row..<lastIndex {
-                    self.tabResults[i].name = self.tabResults[i + 1].name
-                    self.tabResults[i].savedMessageList.removeAll()
-                    for savedMessage in self.tabResults[i + 1].savedMessageList {
-                        self.tabResults[i].savedMessageList.append(savedMessage)
-                    }
-                }
-                self.realm.delete(self.tabResults[lastIndex])
-            }
-            
-            self.tableView.reloadData()
-            self.loadTableHeight()
-        })
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
+            self.deleteTab(at: indexPath)
+        }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         
         alert.addAction(deleteAction)
@@ -169,6 +149,8 @@ extension TabManagementViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceTab = tabResults[sourceIndexPath.row]
+        let destinationTab = tabResults[destinationIndexPath.row]
+        let destinationTabOrder = destinationTab.order
         
         try! realm.write {
             if sourceIndexPath.row < destinationIndexPath.row {
@@ -183,7 +165,7 @@ extension TabManagementViewController: UITableViewDataSource, UITableViewDelegat
                 }
             }
             
-            sourceTab.order = destinationIndexPath.row
+            sourceTab.order = destinationTabOrder
         }
     }
     
@@ -210,6 +192,10 @@ extension TabManagementViewController {
             let tab = Tab()
             tab.name = text
             
+            if let lastOrder = tabResults.last?.order {
+                tab.order = lastOrder + 1
+            }
+            
             try! realm.write {
                 realm.add(tab)
             }
@@ -220,6 +206,24 @@ extension TabManagementViewController {
         }
         
         textField.resignFirstResponder()
+    }
+    
+    func deleteTab(at indexPath: IndexPath) {
+        try! realm.write {
+            realm.delete(tabResults[indexPath.row])
+        }
+        
+        tableView.reloadData()
+        loadTableHeight()
+    }
+    
+    func renameTab(at indexPath: IndexPath, newName: String) {
+        try! realm.write {
+            tabResults[indexPath.row].name = newName
+        }
+        
+        tableView.reloadData()
+        loadTableHeight()
     }
     
 }

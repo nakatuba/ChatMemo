@@ -30,9 +30,9 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
             let date = savedMessage.date
             
             if let text = savedMessage.text {
-                return MockMessage(text: text,  user: user, messageId: messageId, date: date)
+                return MockMessage(text: text, user: user, messageId: messageId, date: date)
             } else if let data = savedMessage.image, let image = UIImage(data: data) {
-                return MockMessage(image: image,  user: user, messageId: messageId, date: date)
+                return MockMessage(image: image, user: user, messageId: messageId, date: date)
             }
             
             return nil
@@ -274,10 +274,7 @@ extension ChatViewController: MessagesDataSource {
 extension ChatViewController: MessagesLayoutDelegate {
     
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        if isDateLabelVisible(at: indexPath) {
-            return 32
-        }
-        return 0
+        return isDateLabelVisible(at: indexPath) ? 32 : 0
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
@@ -334,15 +331,13 @@ extension ChatViewController: MessageCellDelegate {
     func didSelectURL(_ url: URL) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let title = url.scheme == "mailto" ? "New message" : "Open in Safari"
-        
-        let urlAction = UIAlertAction(title: NSLocalizedString(title, comment: ""), style: .default, handler: { _ in
+        let urlAction = UIAlertAction(title: NSLocalizedString(title, comment: ""), style: .default) { _ in
             UIApplication.shared.open(url)
             self.becomeFirstResponder()
-        })
-        
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
             self.becomeFirstResponder()
-        })
+        }
         
         alert.addAction(urlAction)
         alert.addAction(cancelAction)
