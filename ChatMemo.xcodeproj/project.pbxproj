@@ -14,6 +14,8 @@
 		6506475123ECC7DC00E914D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6506475023ECC7DC00E914D7 /* Assets.xcassets */; };
 		6506475423ECC7DC00E914D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6506475223ECC7DC00E914D7 /* LaunchScreen.storyboard */; };
 		6506B73B2592F06900F7B2AC /* MessageCollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506B73A2592F06900F7B2AC /* MessageCollectionViewCell+Extensions.swift */; };
+		6506B7BA2593EC3200F7B2AC /* CustomMessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506B7B92593EC3200F7B2AC /* CustomMessagesCollectionView.swift */; };
+		6506B7D22593EF2300F7B2AC /* CustomMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506B7D12593EF2300F7B2AC /* CustomMessagesViewController.swift */; };
 		6514B6A824123DD900B999FD /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514B6A724123DD900B999FD /* EmptyViewController.swift */; };
 		65212D4C2417E01C00585678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65212D4B2417E01C00585678 /* GoogleService-Info.plist */; };
 		652B607C23ECD8EE00BF2E90 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B607B23ECD8EE00BF2E90 /* ChatViewController.swift */; };
@@ -23,7 +25,7 @@
 		654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */; };
 		65773FA9246A62BC0011DEFF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65773FAB246A62BC0011DEFF /* Localizable.strings */; };
 		65773FAE246A67830011DEFF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65773FB0246A67830011DEFF /* InfoPlist.strings */; };
-		658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */; };
+		658EB91323F9E5E8002F9C40 /* TabManagementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EB91223F9E5E8002F9C40 /* TabManagementCell.swift */; };
 		6597C4852475675400BE853B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6597C4842475675400BE853B /* SettingsTableViewController.swift */; };
 		65B8F3792592E4EA0083EB1D /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8F3782592E4EA0083EB1D /* MockMessage.swift */; };
 		65B8F37C2592E5020083EB1D /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8F37B2592E5020083EB1D /* MockUser.swift */; };
@@ -40,6 +42,8 @@
 		6506475323ECC7DC00E914D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6506475523ECC7DC00E914D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6506B73A2592F06900F7B2AC /* MessageCollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
+		6506B7B92593EC3200F7B2AC /* CustomMessagesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesCollectionView.swift; sourceTree = "<group>"; };
+		6506B7D12593EF2300F7B2AC /* CustomMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesViewController.swift; sourceTree = "<group>"; };
 		6514B6A724123DD900B999FD /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		65212D4B2417E01C00585678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		652B607B23ECD8EE00BF2E90 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -49,7 +53,7 @@
 		654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementViewController.swift; sourceTree = "<group>"; };
 		65773FAA246A62BC0011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65773FAF246A67830011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementTableViewCell.swift; sourceTree = "<group>"; };
+		658EB91223F9E5E8002F9C40 /* TabManagementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementCell.swift; sourceTree = "<group>"; };
 		6597C4842475675400BE853B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		65A8246C246D39E20026EDBF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		65A8246D246D39ED0026EDBF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
@@ -141,7 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				6506474D23ECC7DB00E914D7 /* Main.storyboard */,
-				658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */,
+				658EB91223F9E5E8002F9C40 /* TabManagementCell.swift */,
+				6506B7B92593EC3200F7B2AC /* CustomMessagesCollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 			children = (
 				6536739A23F72AC100207269 /* MainViewController.swift */,
 				6514B6A724123DD900B999FD /* EmptyViewController.swift */,
+				6506B7D12593EF2300F7B2AC /* CustomMessagesViewController.swift */,
 				652B607B23ECD8EE00BF2E90 /* ChatViewController.swift */,
 				65CC1E3A2460433A00412334 /* PopupViewController.swift */,
 				654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */,
@@ -307,13 +313,15 @@
 				6536739B23F72AC100207269 /* MainViewController.swift in Sources */,
 				6506474823ECC7DB00E914D7 /* AppDelegate.swift in Sources */,
 				65B8F37C2592E5020083EB1D /* MockUser.swift in Sources */,
+				6506B7BA2593EC3200F7B2AC /* CustomMessagesCollectionView.swift in Sources */,
 				6514B6A824123DD900B999FD /* EmptyViewController.swift in Sources */,
 				65B8F3792592E4EA0083EB1D /* MockMessage.swift in Sources */,
 				654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */,
 				652B60A823EF784C00BF2E90 /* Tab.swift in Sources */,
 				652B607C23ECD8EE00BF2E90 /* ChatViewController.swift in Sources */,
-				658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */,
+				658EB91323F9E5E8002F9C40 /* TabManagementCell.swift in Sources */,
 				6597C4852475675400BE853B /* SettingsTableViewController.swift in Sources */,
+				6506B7D22593EF2300F7B2AC /* CustomMessagesViewController.swift in Sources */,
 				652C7B7C2587E72B0027A859 /* SavedMessage.swift in Sources */,
 				65CC1E3B2460433A00412334 /* PopupViewController.swift in Sources */,
 				6506B73B2592F06900F7B2AC /* MessageCollectionViewCell+Extensions.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  TabManagementTableViewCell.swift
+//  TabManagementCell.swift
 //  ChatMemo
 //
 //  Created by 中川翼 on 2020/02/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabManagementTableViewCell: UITableViewCell {
+class TabManagementCell: UITableViewCell {
     
     @IBOutlet weak var renameButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!

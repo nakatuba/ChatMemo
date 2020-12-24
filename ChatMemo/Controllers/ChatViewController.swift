@@ -13,7 +13,7 @@ import RealmSwift
 import XLPagerTabStrip
 import SKPhotoBrowser
 
-class ChatViewController: MessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: CustomMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let realm = try! Realm()
     var savedMessageList: List<SavedMessage>!
@@ -74,8 +74,10 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         messageInputBar.inputTextView.layer.cornerRadius = 20.0
         messageInputBar.sendButton.setImage(UIImage(named: "send"), for: .normal)
         
-        scrollsToBottomOnKeyboardBeginsEditing = true
-        maintainPositionOnKeyboardFrameChanged = true
+        customMessagesCollectionView.customMessagesCollectionViewDelegate = self
+        
+//        scrollsToBottomOnKeyboardBeginsEditing = true
+//        maintainPositionOnKeyboardFrameChanged = true
         
         let cameraButton = makeButton(systemName: "camera")
         cameraButton.onTouchUpInside { _ in
@@ -98,12 +100,9 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         messageInputBar.setLeftStackViewWidthConstant(to: 76, animated: false)
         messageInputBar.setRightStackViewWidthConstant(to: 26, animated: false)
         
-        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-            layout.setMessageOutgoingAvatarSize(.zero)
-            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-            layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: insets))
-            layout.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: insets))
-        }
+        let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        layout?.setMessageOutgoingAvatarSize(.zero)
+        layout?.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)))
         
         let editMenuItem = UIMenuItem(title: NSLocalizedString("Edit", comment: ""),
                                       action: #selector(MessageCollectionViewCell.editMessage(_:)))
@@ -198,8 +197,8 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
         switch action {
         case NSSelectorFromString("editMessage:"):
             messageInputBar.inputTextView.resignFirstResponder()
-            scrollsToBottomOnKeyboardBeginsEditing = false
-            maintainPositionOnKeyboardFrameChanged = false
+//            scrollsToBottomOnKeyboardBeginsEditing = false
+//            maintainPositionOnKeyboardFrameChanged = false
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let popupVC = storyboard.instantiateViewController(withIdentifier: "Popup") as! PopupViewController
@@ -259,6 +258,7 @@ extension ChatViewController: MessagesDataSource {
             
             return NSAttributedString(string: formatter.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
         }
+        
         return nil
     }
     
@@ -316,13 +316,7 @@ extension ChatViewController: MessagesDisplayDelegate {
 
 extension ChatViewController: MessageCellDelegate {
     
-    func didTapBackground(in cell: MessageCollectionViewCell) {
-        messageInputBar.inputTextView.resignFirstResponder()
-    }
-    
     func didTapImage(in cell: MessageCollectionViewCell) {
-        messageInputBar.inputTextView.resignFirstResponder()
-        
         if let collectionView = cell.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: cell) {
                 let browser = SKPhotoBrowser(photos: images)
@@ -338,14 +332,10 @@ extension ChatViewController: MessageCellDelegate {
     }
     
     func didSelectURL(_ url: URL) {
-        messageInputBar.inputTextView.resignFirstResponder()
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let title = url.scheme == "mailto"
-            ? NSLocalizedString("New message", comment: "")
-            : NSLocalizedString("Open in Safari", comment: "")
+        let title = url.scheme == "mailto" ? "New message" : "Open in Safari"
         
-        let urlAction = UIAlertAction(title: title, style: .default, handler: { _ in
+        let urlAction = UIAlertAction(title: NSLocalizedString(title, comment: ""), style: .default, handler: { _ in
             UIApplication.shared.open(url)
             self.becomeFirstResponder()
         })
@@ -384,6 +374,14 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
         
         messageInputBar.inputTextView.text = ""
+    }
+    
+}
+
+extension ChatViewController: CustomMessagesCollectionViewDelegate {
+    
+    func didTap() {
+        messageInputBar.inputTextView.resignFirstResponder()
     }
     
 }
