@@ -13,7 +13,7 @@ import RealmSwift
 import XLPagerTabStrip
 import SKPhotoBrowser
 
-class ChatViewController: MessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: MessagesViewController {
     
     let realm = try! Realm()
     var savedMessageList: List<SavedMessage>!
@@ -193,37 +193,6 @@ class ChatViewController: MessagesViewController, UIImagePickerControllerDelegat
             }.onDeselected {
                 $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
             }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])  {
-        if let image = info[.originalImage] as? UIImage, let cgImage = image.cgImage {
-            let scale = image.size.width / (messageInputBar.inputTextView.frame.width - 2 * (messageInputBar.inputTextView.textContainerInset.left + messageInputBar.inputTextView.textContainerInset.right))
-            let textAttachment = NSTextAttachment()
-            textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: image.imageOrientation)
-            let attributedImageString = NSAttributedString(attachment: textAttachment)
-            let isEmpty = messageInputBar.inputTextView.attributedText.length == 0
-            let newAttributedStingComponent = isEmpty ? NSMutableAttributedString(string: "") : NSMutableAttributedString(string: "\n")
-            newAttributedStingComponent.append(attributedImageString)
-            newAttributedStingComponent.append(NSAttributedString(string: "\n"))
-            let attributes: [NSAttributedString.Key: Any] = [
-                NSAttributedString.Key.font: messageInputBar.inputTextView.font ?? UIFont.preferredFont(forTextStyle: .body),
-                NSAttributedString.Key.foregroundColor: messageInputBar.inputTextView.textColor ?? .black
-            ]
-            newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
-            messageInputBar.inputTextView.textStorage.beginEditing()
-            messageInputBar.inputTextView.textStorage.replaceCharacters(in: messageInputBar.inputTextView.selectedRange, with: newAttributedStingComponent)
-            messageInputBar.inputTextView.textStorage.endEditing()
-            let location = messageInputBar.inputTextView.selectedRange.location + (isEmpty ? 2 : 3)
-            messageInputBar.inputTextView.selectedRange = NSRange(location: location, length: 0)
-            NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
-            messageInputBar.sendButton.isEnabled = true
-        }
-        
-        self.dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
@@ -428,6 +397,41 @@ extension ChatViewController: CustomMessagesCollectionViewDelegate {
     
     func didTapMessagesCollectionView() {
         messageInputBar.inputTextView.resignFirstResponder()
+    }
+    
+}
+
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])  {
+        if let image = info[.originalImage] as? UIImage, let cgImage = image.cgImage {
+            let scale = image.size.width / (messageInputBar.inputTextView.frame.width - 2 * (messageInputBar.inputTextView.textContainerInset.left + messageInputBar.inputTextView.textContainerInset.right))
+            let textAttachment = NSTextAttachment()
+            textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: image.imageOrientation)
+            let attributedImageString = NSAttributedString(attachment: textAttachment)
+            let isEmpty = messageInputBar.inputTextView.attributedText.length == 0
+            let newAttributedStingComponent = isEmpty ? NSMutableAttributedString(string: "") : NSMutableAttributedString(string: "\n")
+            newAttributedStingComponent.append(attributedImageString)
+            newAttributedStingComponent.append(NSAttributedString(string: "\n"))
+            let attributes: [NSAttributedString.Key: Any] = [
+                NSAttributedString.Key.font: messageInputBar.inputTextView.font ?? UIFont.preferredFont(forTextStyle: .body),
+                NSAttributedString.Key.foregroundColor: messageInputBar.inputTextView.textColor ?? .black
+            ]
+            newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
+            messageInputBar.inputTextView.textStorage.beginEditing()
+            messageInputBar.inputTextView.textStorage.replaceCharacters(in: messageInputBar.inputTextView.selectedRange, with: newAttributedStingComponent)
+            messageInputBar.inputTextView.textStorage.endEditing()
+            let location = messageInputBar.inputTextView.selectedRange.location + (isEmpty ? 2 : 3)
+            messageInputBar.inputTextView.selectedRange = NSRange(location: location, length: 0)
+            NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
+            messageInputBar.sendButton.isEnabled = true
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

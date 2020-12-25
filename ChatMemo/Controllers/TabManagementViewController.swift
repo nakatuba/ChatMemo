@@ -65,12 +65,6 @@ class TabManagementViewController: UIViewController {
         bannerView.load(GADRequest())
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let mainVC = navigationController?.viewControllers[0] as! MainViewController
-        mainVC.reloadPagerTabStripView()
-    }
-    
     @IBAction func didTapAddButton(_ sender: Any) {
         addTab()
     }
