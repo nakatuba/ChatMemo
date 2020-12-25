@@ -13,7 +13,7 @@ import RealmSwift
 import XLPagerTabStrip
 import SKPhotoBrowser
 
-class ChatViewController: CustomMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: MessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let realm = try! Realm()
     var savedMessageList: List<SavedMessage>!
@@ -31,6 +31,7 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
             
             if let text = savedMessage.text {
                 if savedMessage.strikethrough {
+                    // 取り消し線
                     let attributes: [NSAttributedString.Key : Any] = [
                         .font : UIFont.preferredFont(forTextStyle: .body),
                         .strikethroughStyle : NSUnderlineStyle.thick.rawValue
@@ -65,6 +66,39 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
         return formatter
     }()
     
+    var customMessagesCollectionView = CustomMessagesCollectionView()
+    
+    override var messagesCollectionView: MessagesCollectionView {
+        get {
+            return customMessagesCollectionView
+        }
+        set {
+            customMessagesCollectionView = newValue as! CustomMessagesCollectionView
+        }
+    }
+    
+    var isOverContentHeight: Bool {
+        return messagesCollectionView.visibleSize.height / 2 < messagesCollectionView.contentSize.height
+    }
+    
+    var isVisibleLastCell: Bool {
+        return messagesCollectionView.cellForItem(at: IndexPath(row: 0, section: messageList.count - 1)) != nil
+    }
+    
+    override var scrollsToBottomOnKeyboardBeginsEditing: Bool {
+        get {
+            return isOverContentHeight && isVisibleLastCell
+        }
+        set { }
+    }
+    
+    override var maintainPositionOnKeyboardFrameChanged: Bool {
+        get {
+            return isOverContentHeight && isVisibleLastCell
+        }
+        set { }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesCollectionView.messagesDataSource = self
@@ -86,8 +120,7 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
         
         customMessagesCollectionView.customMessagesCollectionViewDelegate = self
         
-//        scrollsToBottomOnKeyboardBeginsEditing = true
-//        maintainPositionOnKeyboardFrameChanged = true
+        messagesCollectionView.scrollToBottom()
         
         let cameraButton = makeButton(systemName: "camera")
         cameraButton.onTouchUpInside { _ in
@@ -185,6 +218,7 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
             NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
             messageInputBar.sendButton.isEnabled = true
         }
+        
         self.dismiss(animated: true)
     }
     
@@ -210,10 +244,6 @@ class ChatViewController: CustomMessagesViewController, UIImagePickerControllerD
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
         switch action {
         case NSSelectorFromString("editMessage:"):
-            messageInputBar.inputTextView.resignFirstResponder()
-//            scrollsToBottomOnKeyboardBeginsEditing = false
-//            maintainPositionOnKeyboardFrameChanged = false
-            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let popupVC = storyboard.instantiateViewController(withIdentifier: "Popup") as! PopupViewController
             popupVC.modalPresentationStyle = .overFullScreen
@@ -276,7 +306,6 @@ extension ChatViewController: MessagesDataSource {
             
             return NSAttributedString(string: formatter.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
         }
-        
         return nil
     }
     
@@ -397,7 +426,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 
 extension ChatViewController: CustomMessagesCollectionViewDelegate {
     
-    func didTap() {
+    func didTapMessagesCollectionView() {
         messageInputBar.inputTextView.resignFirstResponder()
     }
     

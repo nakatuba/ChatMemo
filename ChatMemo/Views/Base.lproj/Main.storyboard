@@ -57,7 +57,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="2jh-wN-xqv"/>
                         <barButtonItem key="leftBarButtonItem" image="setting" id="pXJ-WH-YBi">
                             <connections>
-                                <segue destination="fSm-ne-dMs" kind="presentation" identifier="goToTabManagement" id="vCf-pg-vFU"/>
+                                <segue destination="fSm-ne-dMs" kind="presentation" identifier="" id="vCf-pg-vFU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="A3I-Hq-kAg">

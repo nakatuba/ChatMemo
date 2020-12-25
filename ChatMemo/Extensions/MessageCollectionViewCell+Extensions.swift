@@ -11,46 +11,42 @@ import MessageKit
 extension MessageCollectionViewCell {
     
     @objc func editMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("editMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
+        if let collectionView = superview as? UICollectionView,
+           let indexPath = collectionView.indexPath(for: self) {
+            collectionView.delegate?.collectionView?(collectionView,
+                                                     performAction: NSSelectorFromString("editMessage:"),
+                                                     forItemAt: indexPath,
+                                                     withSender: sender)
         }
     }
     
     @objc func drawStrikethrough(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("drawStrikethrough:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
+        if let collectionView = superview as? UICollectionView,
+           let indexPath = collectionView.indexPath(for: self) {
+            collectionView.delegate?.collectionView?(collectionView,
+                                                     performAction: NSSelectorFromString("drawStrikethrough:"),
+                                                     forItemAt: indexPath,
+                                                     withSender: sender)
         }
     }
     
     @objc func copyMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("copyMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
+        if let collectionView = superview as? UICollectionView,
+           let indexPath = collectionView.indexPath(for: self) {
+            collectionView.delegate?.collectionView?(collectionView,
+                                                     performAction: NSSelectorFromString("copyMessage:"),
+                                                     forItemAt: indexPath,
+                                                     withSender: sender)
         }
     }
     
     @objc func deleteMessage(_ sender: Any?) {
-        if let collectionView = self.superview as? UICollectionView {
-            if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView,
-                                                         performAction: NSSelectorFromString("deleteMessage:"),
-                                                         forItemAt: indexPath,
-                                                         withSender: sender)
-            }
+        if let collectionView = superview as? UICollectionView,
+           let indexPath = collectionView.indexPath(for: self) {
+            collectionView.delegate?.collectionView?(collectionView,
+                                                     performAction: NSSelectorFromString("deleteMessage:"),
+                                                     forItemAt: indexPath,
+                                                     withSender: sender)
         }
     }
     

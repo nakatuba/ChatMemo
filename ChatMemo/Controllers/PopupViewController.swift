@@ -52,18 +52,10 @@ class PopupViewController: UIViewController {
         
         chatVC.messagesCollectionView.reloadData()
         dismiss(animated: true, completion: nil)
-//        chatVC.scrollsToBottomOnKeyboardBeginsEditing = true
-//        chatVC.maintainPositionOnKeyboardFrameChanged = true
     }
     
     @IBAction func didTapCancelButton(_ sender: Any) {
-//        let naviVC = presentingViewController as! UINavigationController
-//        let mainVC = naviVC.viewControllers[0] as! MainViewController
-//        let chatVC = mainVC.children[0] as! ChatViewController
-        
         dismiss(animated: true, completion: nil)
-//        chatVC.scrollsToBottomOnKeyboardBeginsEditing = true
-//        chatVC.maintainPositionOnKeyboardFrameChanged = true
     }
     
 }

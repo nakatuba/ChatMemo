@@ -9,7 +9,7 @@
 import MessageKit
 
 protocol CustomMessagesCollectionViewDelegate {
-    func didTap()
+    func didTapMessagesCollectionView()
 }
 
 class CustomMessagesCollectionView: MessagesCollectionView {
@@ -18,7 +18,7 @@ class CustomMessagesCollectionView: MessagesCollectionView {
     
     override func handleTapGesture(_ gesture: UIGestureRecognizer) {
         super.handleTapGesture(gesture)
-        customMessagesCollectionViewDelegate?.didTap()
+        customMessagesCollectionViewDelegate?.didTapMessagesCollectionView()
     }
     
 }
