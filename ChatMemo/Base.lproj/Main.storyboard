@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v2F-sv-MZh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v2F-sv-MZh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -55,7 +55,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="2jh-wN-xqv"/>
                         <barButtonItem key="leftBarButtonItem" image="setting" id="pXJ-WH-YBi">
                             <connections>
-                                <segue destination="4Qc-Lf-L3u" kind="show" id="IjG-2C-vpu"/>
+                                <segue destination="fSm-ne-dMs" kind="presentation" id="vCf-pg-vFU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="A3I-Hq-kAg">
@@ -355,7 +355,7 @@
             <objects>
                 <tableViewController id="4Qc-Lf-L3u" customClass="SettingsTableViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PwY-p3-GIP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -373,11 +373,17 @@
                             <outlet property="delegate" destination="4Qc-Lf-L3u" id="Nng-x6-ZzW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="lni-7b-3ot"/>
+                    <navigationItem key="navigationItem" title="Settings" id="cOI-GE-oEu">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="RcG-kb-1kp">
+                            <connections>
+                                <action selector="didTapCloseButton:" destination="4Qc-Lf-L3u" id="C7h-8X-w4q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v4U-M3-klb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3006" y="788"/>
+            <point key="canvasLocation" x="3915.9420289855075" y="787.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZXW-fe-o1a">
@@ -388,7 +394,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.10980392156862745" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.11764705882352941" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -401,6 +407,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qhy-BH-KuU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1208.6956521739132" y="115.84821428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EDu-ny-baa">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fSm-ne-dMs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3st-oU-n9Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.1176470588" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4Qc-Lf-L3u" kind="relationship" relationship="rootViewController" id="Xis-2j-Qwr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="84Z-NX-Oao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3005.7971014492755" y="787.5"/>
         </scene>
     </scenes>
     <resources>

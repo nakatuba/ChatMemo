@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>写真を撮影するためにカメラを使用します。</string>
+	<string>You will use your camera to take pictures to use in your notes.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>画像を保存します。</string>
+	<string>You will save the image.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>写真を使用します。</string>
+	<string>You will use the photos.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

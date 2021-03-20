@@ -6,3 +6,6 @@
   Copyright © 2020 中川翼. All rights reserved.
 */
 CFBundleDisplayName = "チャットメモ";
+"NSCameraUsageDescription" = "メモに用いる写真を撮影するためにカメラを使用します。";
+"NSPhotoLibraryAddUsageDescription" = "画像を保存します。";
+"NSPhotoLibraryUsageDescription" = "写真を使用します。";

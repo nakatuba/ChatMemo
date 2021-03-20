@@ -78,4 +78,11 @@ class MainViewController: ButtonBarPagerTabStripViewController {
         return tab
     }
     
+    override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat, indexWasChanged: Bool) {
+        super.updateIndicator(for: viewController, fromIndex: fromIndex, toIndex: toIndex, withProgressPercentage: progressPercentage, indexWasChanged: indexWasChanged)
+        guard progressPercentage == 1.0 else { return }
+        guard let chatVC = children[0] as? ChatViewController else { return }
+        chatVC.becomeFirstResponder()
+    }
+    
 }
