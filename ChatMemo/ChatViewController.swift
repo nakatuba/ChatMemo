@@ -48,7 +48,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         messageInputBar.inputTextView.layer.cornerRadius = 20.0
         messageInputBar.sendButton.title = "送信"
         
-        let cameraButton = makeButton(systemName: "camera")
+        let cameraButton = makeButton(named: "camera")
         cameraButton.onTouchUpInside { _ in
             let pickerController = UIImagePickerController()
             pickerController.sourceType = .camera
@@ -56,7 +56,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
             self.present(pickerController, animated: true, completion: nil)
         }
         
-        let photoButton = makeButton(systemName: "photo")
+        let photoButton = makeButton(named: "photo")
         photoButton.onTouchUpInside { _ in
             let pickerController = UIImagePickerController()
             pickerController.sourceType = .savedPhotosAlbum
@@ -64,7 +64,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
             self.present(pickerController, animated: true, completion: nil)
         }
         
-        let items = [cameraButton, photoButton, .flexibleSpace]
+        let items = [cameraButton, .fixedSpace(12), photoButton, .flexibleSpace]
         messageInputBar.setStackViewItems(items, forStack: .left, animated: false)
         messageInputBar.setLeftStackViewWidthConstant(to: 76, animated: false)
         
@@ -142,12 +142,12 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         return lastMessageDate != thisMessageDate
     }
     
-    func makeButton(systemName: String) -> InputBarButtonItem {
+    func makeButton(named: String) -> InputBarButtonItem {
         return InputBarButtonItem()
             .configure {
                 $0.spacing = .fixed(10)
-                $0.image = UIImage(systemName: systemName)?.withRenderingMode(.alwaysTemplate)
-                $0.setSize(CGSize(width: 25, height: 40), animated: false)
+                $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
+                $0.setSize(CGSize(width: 16, height: 40), animated: false)
                 $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
             }.onSelected {
                 $0.tintColor = .lightGray

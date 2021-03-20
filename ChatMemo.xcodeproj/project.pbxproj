@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		557D69A9545D89E974E36DD3 /* Pods_ChatMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D756BB066418DCDF9502091D /* Pods_ChatMemo.framework */; };
 		6506474823ECC7DB00E914D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506474723ECC7DB00E914D7 /* AppDelegate.swift */; };
 		6506474A23ECC7DB00E914D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506474923ECC7DB00E914D7 /* SceneDelegate.swift */; };
 		6506474F23ECC7DB00E914D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6506474D23ECC7DB00E914D7 /* Main.storyboard */; };
@@ -21,10 +22,10 @@
 		6536739B23F72AC100207269 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536739A23F72AC100207269 /* MainViewController.swift */; };
 		654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */; };
 		658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */; };
-		AD225227A0E492C232692137 /* Pods_ChatMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F313D8DB9D36CEB001E42286 /* Pods_ChatMemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		529441C07881EA311CEE37EE /* Pods-ChatMemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.debug.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6506474423ECC7DB00E914D7 /* ChatMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6506474723ECC7DB00E914D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6506474923ECC7DB00E914D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,9 +42,8 @@
 		6536739A23F72AC100207269 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementViewController.swift; sourceTree = "<group>"; };
 		658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementTableViewCell.swift; sourceTree = "<group>"; };
-		6719501D52B925D18E7E250C /* Pods-ChatMemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.debug.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.debug.xcconfig"; sourceTree = "<group>"; };
-		6741834CFD21BD15D6AC88EC /* Pods-ChatMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.release.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.release.xcconfig"; sourceTree = "<group>"; };
-		F313D8DB9D36CEB001E42286 /* Pods_ChatMemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatMemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69C0B4D0BC6FC8D8638D418F /* Pods-ChatMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.release.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.release.xcconfig"; sourceTree = "<group>"; };
+		D756BB066418DCDF9502091D /* Pods_ChatMemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatMemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD225227A0E492C232692137 /* Pods_ChatMemo.framework in Frameworks */,
+				557D69A9545D89E974E36DD3 /* Pods_ChatMemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,8 +61,8 @@
 		2A9A5FEC22C701B16ED05DC5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6719501D52B925D18E7E250C /* Pods-ChatMemo.debug.xcconfig */,
-				6741834CFD21BD15D6AC88EC /* Pods-ChatMemo.release.xcconfig */,
+				529441C07881EA311CEE37EE /* Pods-ChatMemo.debug.xcconfig */,
+				69C0B4D0BC6FC8D8638D418F /* Pods-ChatMemo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -73,7 +73,7 @@
 				6506474623ECC7DB00E914D7 /* ChatMemo */,
 				6506474523ECC7DB00E914D7 /* Products */,
 				2A9A5FEC22C701B16ED05DC5 /* Pods */,
-				C720A580B899247DF09486AA /* Frameworks */,
+				E37489FB0C9AA5A8073238A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,10 +107,10 @@
 			path = ChatMemo;
 			sourceTree = "<group>";
 		};
-		C720A580B899247DF09486AA /* Frameworks */ = {
+		E37489FB0C9AA5A8073238A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F313D8DB9D36CEB001E42286 /* Pods_ChatMemo.framework */,
+				D756BB066418DCDF9502091D /* Pods_ChatMemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -122,11 +122,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6506475823ECC7DC00E914D7 /* Build configuration list for PBXNativeTarget "ChatMemo" */;
 			buildPhases = (
-				38EC3C041032C6ED9DEF7A44 /* [CP] Check Pods Manifest.lock */,
+				1A25CA5CA16871E927481D6D /* [CP] Check Pods Manifest.lock */,
 				6506474023ECC7DB00E914D7 /* Sources */,
 				6506474123ECC7DB00E914D7 /* Frameworks */,
 				6506474223ECC7DB00E914D7 /* Resources */,
-				A9FBA51DECEC515A1DFEEEA6 /* [CP] Embed Pods Frameworks */,
+				3E77C000E8EE057F1FBD1A96 /* [CP] Embed Pods Frameworks */,
 				6514B6A6241230A100B999FD /* ShellScript */,
 			);
 			buildRules = (
@@ -186,7 +186,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		38EC3C041032C6ED9DEF7A44 /* [CP] Check Pods Manifest.lock */ = {
+		1A25CA5CA16871E927481D6D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -208,6 +208,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3E77C000E8EE057F1FBD1A96 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6514B6A6241230A100B999FD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -224,23 +241,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		A9FBA51DECEC515A1DFEEEA6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatMemo/Pods-ChatMemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -334,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -388,7 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -400,18 +400,20 @@
 		};
 		6506475923ECC7DC00E914D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6719501D52B925D18E7E250C /* Pods-ChatMemo.debug.xcconfig */;
+			baseConfigurationReference = 529441C07881EA311CEE37EE /* Pods-ChatMemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 38H9RWQDMB;
 				INFOPLIST_FILE = ChatMemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -421,18 +423,20 @@
 		};
 		6506475A23ECC7DC00E914D7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6741834CFD21BD15D6AC88EC /* Pods-ChatMemo.release.xcconfig */;
+			baseConfigurationReference = 69C0B4D0BC6FC8D8638D418F /* Pods-ChatMemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 38H9RWQDMB;
 				INFOPLIST_FILE = ChatMemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

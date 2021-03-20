@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import Firebase
 
-class TabManagementViewController: UIViewController, UIGestureRecognizerDelegate {
+class TabManagementViewController: UIViewController {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var addButton: UIButton!
@@ -28,10 +28,11 @@ class TabManagementViewController: UIViewController, UIGestureRecognizerDelegate
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isEditing = true
-        tableHeight.constant = tableView.contentSize.height
+        let cellHeight = tableView.cellForRow(at: [0, 0])?.frame.height ?? 0
+        let numberOfCell = CGFloat(tableView.numberOfRows(inSection: 0))
+        tableHeight.constant = cellHeight * numberOfCell
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-        tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         
         bannerView.adUnitID = "ca-app-pub-1193328696064480/9409287595"
@@ -60,7 +61,9 @@ class TabManagementViewController: UIViewController, UIGestureRecognizerDelegate
             }
             textField.text = ""
             tableView.reloadData()
-            tableHeight.constant = tableView.contentSize.height
+            let cellHeight = tableView.cellForRow(at: [0, 0])?.frame.height ?? 0
+            let numberOfCell = CGFloat(tableView.numberOfRows(inSection: 0))
+            tableHeight.constant = cellHeight * numberOfCell
         }
         textField.resignFirstResponder()
     }
@@ -69,18 +72,18 @@ class TabManagementViewController: UIViewController, UIGestureRecognizerDelegate
         let alert = UIAlertController(title: "タブ名変更", message: nil, preferredStyle: .alert)
         let changeAction = UIAlertAction(title: "変更", style: .default, handler: { _ in
             let textField = alert.textFields![0]
-            if let text = textField.text, !text.isEmpty {
-                let realm = try! Realm()
-                let tabObjects = realm.objects(Tab.self)
-                let point = self.tableView.convert(CGPoint.zero, from: sender)
-                if let indexPath = self.tableView.indexPathForRow(at: point) {
-                    try! realm.write {
-                        tabObjects[indexPath.row].name = text
-                    }
-                }
-                self.tableView.reloadData()
-                self.tableHeight.constant = self.tableView.contentSize.height
+            guard let text = textField.text, !text.isEmpty else { return }
+            let realm = try! Realm()
+            let tabObjects = realm.objects(Tab.self)
+            let point = self.tableView.convert(CGPoint.zero, from: sender)
+            guard let indexPath = self.tableView.indexPathForRow(at: point) else { return }
+            try! realm.write {
+                tabObjects[indexPath.row].name = text
             }
+            self.tableView.reloadData()
+            let cellHeight = self.tableView.cellForRow(at: [0, 0])?.frame.height ?? 0
+            let numberOfCell = CGFloat(self.tableView.numberOfRows(inSection: 0))
+            self.tableHeight.constant = cellHeight * numberOfCell
         })
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
@@ -108,14 +111,22 @@ class TabManagementViewController: UIViewController, UIGestureRecognizerDelegate
             let realm = try! Realm()
             let tabObjects = realm.objects(Tab.self)
             let point = self.tableView.convert(CGPoint.zero, from: sender)
-            if let indexPath = self.tableView.indexPathForRow(at: point) {
-                let tabObject = tabObjects[indexPath.row]
-                try! realm.write {
-                    realm.delete(tabObject)
+            guard let indexPath = self.tableView.indexPathForRow(at: point) else { return }
+            guard let lastIndex = tabObjects.indices.last else { return }
+            try! realm.write {
+                for i in indexPath.row..<lastIndex {
+                    tabObjects[i].name = tabObjects[i + 1].name
+                    tabObjects[i].savedMessageList.removeAll()
+                    for savedMessage in tabObjects[i + 1].savedMessageList {
+                        tabObjects[i].savedMessageList.append(savedMessage)
+                    }
                 }
+                realm.delete(tabObjects[lastIndex])
             }
             self.tableView.reloadData()
-            self.tableHeight.constant = self.tableView.contentSize.height
+            let cellHeight = self.tableView.cellForRow(at: [0, 0])?.frame.height ?? 0
+            let numberOfCell = CGFloat(self.tableView.numberOfRows(inSection: 0))
+            self.tableHeight.constant = cellHeight * numberOfCell
         })
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
@@ -150,16 +161,10 @@ extension TabManagementViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TabManagementTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let realm = try! Realm()
         let tabObjects = realm.objects(Tab.self)
         cell.textLabel?.text = tabObjects[indexPath.row].name
-        cell.changeButton.layer.borderWidth = 1.0
-        cell.changeButton.layer.borderColor = UIColor.systemGreen.cgColor
-        cell.changeButton.layer.cornerRadius = 4.0
-        cell.deleteButton.layer.borderWidth = 1.0
-        cell.deleteButton.layer.borderColor = UIColor.systemRed.cgColor
-        cell.deleteButton.layer.cornerRadius = 4.0
         return cell
     }
     

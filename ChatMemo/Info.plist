@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
@@ -26,6 +26,8 @@
 	<string>写真を撮影するためにカメラを使用します。</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>画像を保存します。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>写真を使用します。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

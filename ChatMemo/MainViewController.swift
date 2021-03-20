@@ -39,8 +39,8 @@ class MainViewController: ButtonBarPagerTabStripViewController {
         var tab: [UIViewController] = []
         
         if tabObjects.isEmpty {
-            view.backgroundColor = .tertiarySystemGroupedBackground
-            let emptyVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EmptyViewController")
+            let emptyVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Empty")
+            view.backgroundColor = emptyVC.view.backgroundColor
             tab.append(emptyVC)
         } else {
             view.backgroundColor = UIColor(red: 120/255, green: 180/255, blue: 240/255, alpha: 1)

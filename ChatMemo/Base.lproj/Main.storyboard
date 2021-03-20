@@ -40,7 +40,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="WUC-hf-yE3" firstAttribute="trailing" secondItem="VNN-OJ-D9k" secondAttribute="trailing" id="AXt-qY-qnm"/>
-                            <constraint firstItem="zMt-b4-dQm" firstAttribute="top" secondItem="i2d-CY-aVh" secondAttribute="bottom" id="F8a-Lq-ugW"/>
+                            <constraint firstItem="zMt-b4-dQm" firstAttribute="top" secondItem="i2d-CY-aVh" secondAttribute="bottom" id="Iso-X7-eYy"/>
                             <constraint firstItem="zMt-b4-dQm" firstAttribute="trailing" secondItem="VNN-OJ-D9k" secondAttribute="trailing" id="JzZ-BB-H7I"/>
                             <constraint firstItem="i2d-CY-aVh" firstAttribute="centerX" secondItem="B63-Vf-51h" secondAttribute="centerX" id="OWA-8Z-adO"/>
                             <constraint firstItem="i2d-CY-aVh" firstAttribute="top" secondItem="WUC-hf-yE3" secondAttribute="bottom" id="QSS-cI-qJp"/>
@@ -86,7 +86,7 @@
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="タブ名を入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lbU-24-b8T">
                                                 <rect key="frame" x="0.0" y="80" width="414" height="50"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="4Kn-Fj-M6I"/>
                                                 </constraints>
@@ -115,14 +115,14 @@
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="aUj-v7-bPC" customClass="TabManagementTableViewCell" customModule="ChatMemo" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="28" width="414" height="44.5"/>
+                                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aUj-v7-bPC" id="cWS-zA-EhG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SJ-wg-CMN">
-                                                                    <rect key="frame" x="354" y="7" width="50" height="30.5"/>
+                                                                    <rect key="frame" x="354" y="7" width="50" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="50" id="zRM-2N-nsb"/>
                                                                     </constraints>
@@ -134,7 +134,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxQ-xE-vUO">
-                                                                    <rect key="frame" x="294" y="7" width="50" height="30.5"/>
+                                                                    <rect key="frame" x="294" y="7" width="50" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="50" id="gC3-r7-9jW"/>
                                                                     </constraints>
@@ -147,14 +147,13 @@
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="cxQ-xE-vUO" firstAttribute="top" secondItem="cWS-zA-EhG" secondAttribute="top" constant="7" id="Idg-mV-MZd"/>
-                                                                <constraint firstAttribute="bottom" secondItem="cxQ-xE-vUO" secondAttribute="bottom" constant="7" id="Oy6-oF-vsD"/>
-                                                                <constraint firstAttribute="bottom" secondItem="8SJ-wg-CMN" secondAttribute="bottom" constant="7" id="Srz-T3-DaM"/>
+                                                                <constraint firstItem="cxQ-xE-vUO" firstAttribute="centerY" secondItem="cWS-zA-EhG" secondAttribute="centerY" id="8SM-Zp-OYC"/>
+                                                                <constraint firstItem="8SJ-wg-CMN" firstAttribute="centerY" secondItem="cWS-zA-EhG" secondAttribute="centerY" id="cAU-Na-3OO"/>
                                                                 <constraint firstAttribute="trailing" secondItem="8SJ-wg-CMN" secondAttribute="trailing" constant="10" id="dPS-8e-jhd"/>
                                                                 <constraint firstItem="8SJ-wg-CMN" firstAttribute="leading" secondItem="cxQ-xE-vUO" secondAttribute="trailing" constant="10" id="ie9-cW-8Ek"/>
-                                                                <constraint firstItem="8SJ-wg-CMN" firstAttribute="top" secondItem="cWS-zA-EhG" secondAttribute="top" constant="7" id="pXF-Xq-lDV"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <connections>
                                                             <outlet property="changeButton" destination="cxQ-xE-vUO" id="rZt-pE-1AV"/>
                                                             <outlet property="deleteButton" destination="8SJ-wg-CMN" id="hAz-5z-m5J"/>
@@ -175,7 +174,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="lbU-24-b8T" secondAttribute="trailing" id="A0V-MZ-NlX"/>
                                             <constraint firstAttribute="trailing" secondItem="Tlx-8r-34Z" secondAttribute="trailing" constant="20" id="Ett-SN-wEn"/>
@@ -196,7 +195,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="rIH-Ae-kko" firstAttribute="leading" secondItem="0Zh-uc-BmB" secondAttribute="leading" id="TPX-Iw-DTn"/>
                                     <constraint firstAttribute="bottom" secondItem="rIH-Ae-kko" secondAttribute="bottom" id="URz-lH-J6l"/>
@@ -237,7 +236,7 @@
         <!--Empty View Controller-->
         <scene sceneID="CIU-IT-zmI">
             <objects>
-                <viewController storyboardIdentifier="EmptyViewController" id="4uY-ml-iu2" customClass="EmptyViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Empty" id="4uY-ml-iu2" customClass="EmptyViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pQQ-PF-deq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -249,7 +248,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Exm-VO-1UK" firstAttribute="centerY" secondItem="pQQ-PF-deq" secondAttribute="centerY" id="gLs-lC-5tY"/>
                             <constraint firstItem="Exm-VO-1UK" firstAttribute="centerX" secondItem="pQQ-PF-deq" secondAttribute="centerX" id="qd9-V1-Mb8"/>
