@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let count = UserDefaults.standard.integer(forKey: key)
         if count == 1 {
             let tab = Tab()
-            tab.name = "メモ"
+            tab.name = NSLocalizedString("Notes", comment: "")
             let realm = try! Realm()
             try! realm.write {
                 realm.add(tab)
             }
-        } else if count % 20 == 0 {
+        } else if count % 10 == 0 {
             SKStoreReviewController.requestReview()
         }
         

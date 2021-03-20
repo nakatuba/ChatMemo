@@ -14,7 +14,7 @@ import XLPagerTabStrip
 import SKPhotoBrowser
 
 class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-
+    
     var tabIndex = 0
     var messageList: [MockMessage] = []
     
@@ -146,10 +146,10 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
                 $0.image = UIImage(systemName: systemName)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 25, height: 40), animated: false)
                 $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
-            }.onSelected {
-                $0.tintColor = .lightGray
-            }.onDeselected {
-                $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
+        }.onSelected {
+            $0.tintColor = .lightGray
+        }.onDeselected {
+            $0.tintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
         }
     }
     
@@ -178,7 +178,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         }
         self.dismiss(animated: true)
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -243,7 +243,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
             break
         }
     }
-
+    
 }
 
 extension MessageCollectionViewCell {
@@ -279,11 +279,11 @@ extension ChatViewController: MessagesDataSource {
     func currentSender() -> SenderType {
         return Sender(id: "", displayName: "")
     }
-
+    
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messageList.count
     }
-
+    
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
     }
@@ -296,16 +296,17 @@ extension ChatViewController: MessagesDataSource {
             case Calendar.current.isDate(message.sentDate, equalTo: Date(), toGranularity: .year):
                 formatter.setLocalizedDateFormatFromTemplate("MdE")
             default:
-                formatter.setLocalizedDateFormatFromTemplate("yMMMMdE")
+                formatter.setLocalizedDateFormatFromTemplate("yMMMdE")
             }
-
+            
             return NSAttributedString(string: formatter.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
         }
         return nil
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        formatter.setLocalizedDateFormatFromTemplate("Hm")
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2), NSAttributedString.Key.foregroundColor: UIColor.white])
     }
@@ -320,11 +321,11 @@ extension ChatViewController: MessagesLayoutDelegate {
         }
         return 0
     }
-
+    
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 8
     }
-
+    
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 16
     }
@@ -332,7 +333,7 @@ extension ChatViewController: MessagesLayoutDelegate {
 }
 
 extension ChatViewController: MessagesDisplayDelegate {
-
+    
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return .black
     }
@@ -343,16 +344,16 @@ extension ChatViewController: MessagesDisplayDelegate {
         default: return MessageLabel.defaultAttributes
         }
     }
-
+    
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return [.url, .phoneNumber]
     }
-
+    
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(tail, .curved)
     }
-
+    
 }
 
 extension ChatViewController: MessageCellDelegate {
@@ -389,7 +390,7 @@ extension ChatViewController: MessageCellDelegate {
         var title = NSLocalizedString("Open in Safari", comment: "")
         
         if url.scheme == "mailto" {
-                title = NSLocalizedString("New message", comment: "")
+            title = NSLocalizedString("New message", comment: "")
         }
         
         let urlAction = UIAlertAction(title: title, style: .default, handler: { _ in

@@ -10,9 +10,9 @@ import UIKit
 import XLPagerTabStrip
 
 class EmptyViewController: UIViewController, IndicatorInfoProvider {
-
+    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "")
     }
-
+    
 }

@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 class PopupViewController: UIViewController {
-
+    
     let topBorder = CALayer()
     let centerBorder = CALayer()
     var messageIndex = 0
@@ -22,10 +22,8 @@ class PopupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        popupView.backgroundColor = .tertiarySystemGroupedBackground
         popupView.layer.cornerRadius = 10
         textView.text = messageText
-        textView.backgroundColor = .secondarySystemGroupedBackground
         textView.layer.cornerRadius = 10
         topBorder.backgroundColor = UIColor.secondaryLabel.cgColor
         cancelButton.layer.addSublayer(topBorder)

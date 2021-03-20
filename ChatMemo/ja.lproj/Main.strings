@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "タブ名変更・削除・並び替え"; ObjectID = "0Ya-3A-2wZ"; */
+"0Ya-3A-2wZ.text" = "タブ名変更・削除・並び替え";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "2jh-wN-xqv"; */
+"2jh-wN-xqv.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "削除"; ObjectID = "8SJ-wg-CMN"; */
+"8SJ-wg-CMN.normalTitle" = "削除";
+
+/* Class = "UINavigationItem"; title = "チャットメモ"; ObjectID = "8Sg-8z-9kX"; */
+"8Sg-8z-9kX.title" = "チャットメモ";
+
+/* Class = "UILabel"; text = "メッセージの編集"; ObjectID = "OVa-YS-gah"; */
+"OVa-YS-gah.text" = "メッセージの編集";
+
+/* Class = "UIButton"; normalTitle = "追加する"; ObjectID = "Tlx-8r-34Z"; */
+"Tlx-8r-34Z.normalTitle" = "追加する";
+
+/* Class = "UIButton"; normalTitle = "キャンセル"; ObjectID = "YWl-E7-8bI"; */
+"YWl-E7-8bI.normalTitle" = "キャンセル";
+
+/* Class = "UIButton"; normalTitle = "変更"; ObjectID = "Zmp-wY-1Nv"; */
+"Zmp-wY-1Nv.normalTitle" = "変更";
+
+/* Class = "UIButton"; normalTitle = "変更"; ObjectID = "cxQ-xE-vUO"; */
+"cxQ-xE-vUO.normalTitle" = "変更";
+
+/* Class = "UILabel"; text = "タブ追加"; ObjectID = "hHW-qa-jPE"; */
+"hHW-qa-jPE.text" = "タブ追加";
+
+/* Class = "UILabel"; text = "「タブ管理」でタブを追加できます"; ObjectID = "iQP-zR-acj"; */
+"iQP-zR-acj.text" = "「タブ管理」でタブを追加できます";
+
+/* Class = "UINavigationItem"; title = "タブ管理"; ObjectID = "j47-4w-Lqf"; */
+"j47-4w-Lqf.title" = "タブ管理";
+
+/* Class = "UITextField"; placeholder = "タブ名を入力してください"; ObjectID = "lbU-24-b8T"; */
+"lbU-24-b8T.placeholder" = "タブ名を入力してください";

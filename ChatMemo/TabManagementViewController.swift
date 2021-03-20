@@ -11,7 +11,7 @@ import RealmSwift
 import Firebase
 
 class TabManagementViewController: UIViewController {
-
+    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -204,11 +204,11 @@ extension TabManagementViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-         return .none
+        return .none
     }
-
+    
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-         return false
+        return false
     }
     
 }

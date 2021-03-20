@@ -12,7 +12,7 @@ import XLPagerTabStrip
 import Firebase
 
 class MainViewController: ButtonBarPagerTabStripViewController {
-
+    
     @IBOutlet weak var bannerView: GADBannerView!
     
     override func viewDidLoad() {
@@ -74,8 +74,8 @@ class MainViewController: ButtonBarPagerTabStripViewController {
                 }
             }
         }
-                
+        
         return tab
     }
-
+    
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class TabManagementTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var renameButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
@@ -18,14 +18,16 @@ class TabManagementTableViewCell: UITableViewCell {
         renameButton.layer.borderWidth = 1.0
         renameButton.layer.borderColor = UIColor.systemGreen.cgColor
         renameButton.layer.cornerRadius = 4.0
+        renameButton.titleLabel?.adjustsFontSizeToFitWidth = true
         deleteButton.layer.borderWidth = 1.0
         deleteButton.layer.borderColor = UIColor.systemRed.cgColor
         deleteButton.layer.cornerRadius = 4.0
+        deleteButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         textLabel?.frame.size.width -= renameButton.frame.width + deleteButton.frame.width + 20
     }
-
+    
 }

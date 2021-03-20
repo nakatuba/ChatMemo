@@ -123,10 +123,10 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SJ-wg-CMN">
                                                                     <rect key="frame" x="354" y="7" width="50" height="30"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="width" constant="50" id="apA-04-vUY"/>
                                                                         <constraint firstAttribute="height" constant="30" id="udt-Wo-cXd"/>
-                                                                        <constraint firstAttribute="width" constant="50" id="zRM-2N-nsb"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <state key="normal" title="Delete">
                                                                         <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -137,10 +137,10 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxQ-xE-vUO">
                                                                     <rect key="frame" x="294" y="7" width="50" height="30"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="50" id="gC3-r7-9jW"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="QFt-Ta-ED2"/>
                                                                         <constraint firstAttribute="height" constant="30" id="vDf-jR-qvA"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <state key="normal" title="Rename">
                                                                         <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -284,7 +284,7 @@
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HVh-RH-hzb">
                                         <rect key="frame" x="20" y="45" width="270.5" height="114"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -304,7 +304,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="YWl-E7-8bI" firstAttribute="leading" secondItem="uFl-fR-FDz" secondAttribute="leading" id="0oX-jf-z7U"/>
                                     <constraint firstItem="YWl-E7-8bI" firstAttribute="top" secondItem="HVh-RH-hzb" secondAttribute="bottom" constant="20" id="39W-H3-oTW"/>
