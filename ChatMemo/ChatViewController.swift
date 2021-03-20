@@ -381,7 +381,8 @@ extension ChatViewController: MessageCellDelegate {
     }
     
     func didSelectPhoneNumber(_ phoneNumber: String) {
-        UIApplication.shared.open(URL(string: "tel:\(phoneNumber)")! as URL)
+        guard let phoneNumberURL = URL(string: "tel:\(phoneNumber)") else { return }
+        UIApplication.shared.open(phoneNumberURL)
     }
     
     func didSelectURL(_ url: URL) {

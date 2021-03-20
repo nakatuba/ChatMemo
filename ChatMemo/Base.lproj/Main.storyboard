@@ -53,6 +53,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="ChatMemo" id="8Sg-8z-9kX">
                         <barButtonItem key="backBarButtonItem" title="Back" id="2jh-wN-xqv"/>
+                        <barButtonItem key="leftBarButtonItem" image="setting" id="pXJ-WH-YBi">
+                            <connections>
+                                <segue destination="4Qc-Lf-L3u" kind="show" id="IjG-2C-vpu"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="A3I-Hq-kAg">
                             <connections>
                                 <segue destination="FgF-U5-fX5" kind="show" id="qOQ-7G-dpD"/>
@@ -106,7 +111,7 @@
                                                     <action selector="didTapAddButton:" destination="FgF-U5-fX5" eventType="touchUpInside" id="nJT-Ck-xh6"/>
                                                 </connections>
                                             </button>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9x6-Ie-QNY">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9x6-Ie-QNY">
                                                 <rect key="frame" x="0.0" y="300" width="414" height="354"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -345,6 +350,35 @@
             </objects>
             <point key="canvasLocation" x="2119" y="788"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="5mX-wp-7ab">
+            <objects>
+                <tableViewController id="4Qc-Lf-L3u" customClass="SettingsTableViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PwY-p3-GIP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="oRT-fj-9hZ">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oRT-fj-9hZ" id="cT5-gf-X1H">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="4Qc-Lf-L3u" id="hN9-LT-1Eu"/>
+                            <outlet property="delegate" destination="4Qc-Lf-L3u" id="Nng-x6-ZzW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="lni-7b-3ot"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v4U-M3-klb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3006" y="788"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZXW-fe-o1a">
             <objects>
@@ -369,4 +403,7 @@
             <point key="canvasLocation" x="1208.6956521739132" y="115.84821428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="setting" width="24" height="24"/>
+    </resources>
 </document>

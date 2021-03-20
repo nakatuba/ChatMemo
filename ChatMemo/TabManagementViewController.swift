@@ -27,6 +27,7 @@ class TabManagementViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isEditing = true
+        tableView.isScrollEnabled = false
         loadTableHeight()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
