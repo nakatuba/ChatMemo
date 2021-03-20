@@ -79,9 +79,8 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         let tabObjects = realm.objects(Tab.self)
         for savedMessage in tabObjects[tabIndex].savedMessageList {
             insertMessage(text: savedMessage.text, image: savedMessage.image, date: savedMessage.date)
+            messagesCollectionView.scrollToBottom()
         }
-        messagesCollectionView.layoutIfNeeded()
-        messagesCollectionView.contentOffset.y = messagesCollectionView.contentSize.height
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         tapGesture.delegate = self
@@ -94,7 +93,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if messagesCollectionView.contentSize.height - messagesCollectionView.frame.size.height - (messagesCollectionView.cellForItem(at: IndexPath(row: 0, section: messageList.count - 1))?.frame.size.height ?? 0) < messagesCollectionView.contentOffset.y {
+        if messagesCollectionView.contentSize.height - messagesCollectionView.frame.size.height - (messagesCollectionView.cellForItem(at: IndexPath(row: 0, section: messageList.count - 1))?.frame.size.height ?? 0) <= messagesCollectionView.contentOffset.y {
             scrollsToBottomOnKeyboardBeginsEditing = true
             maintainPositionOnKeyboardFrameChanged = true
         } else {
