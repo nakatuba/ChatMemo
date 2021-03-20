@@ -17,7 +17,6 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
 
     var tabIndex = 0
     var messageList: [MockMessage] = []
-    var images = [SKPhoto]()
     
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,6 +46,8 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 20.0
         messageInputBar.sendButton.title = "送信"
+        scrollsToBottomOnKeyboardBeginsEditing = true
+        maintainPositionOnKeyboardFrameChanged = true
         
         let cameraButton = makeButton(systemName: "camera")
         cameraButton.onTouchUpInside { _ in
@@ -85,21 +86,16 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         tapGesture.delegate = self
         messagesCollectionView.addGestureRecognizer(tapGesture)
+        
+        let editMenuItem = UIMenuItem(title: "編集", action: #selector(MessageCollectionViewCell.editMessage(_:)))
+        let copyMenuItem = UIMenuItem(title: "コピー", action: #selector(MessageCollectionViewCell.copyMessage(_:)))
+        let deleteMenuItem = UIMenuItem(title: "削除", action: #selector(MessageCollectionViewCell.deleteMessage(_:)))
+        UIMenuController.shared.menuItems = [editMenuItem, copyMenuItem, deleteMenuItem]
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         becomeFirstResponder()
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if messagesCollectionView.contentSize.height - messagesCollectionView.frame.size.height - (messagesCollectionView.cellForItem(at: IndexPath(row: 0, section: messageList.count - 1))?.frame.size.height ?? 0) <= messagesCollectionView.contentOffset.y {
-            scrollsToBottomOnKeyboardBeginsEditing = true
-            maintainPositionOnKeyboardFrameChanged = true
-        } else {
-            scrollsToBottomOnKeyboardBeginsEditing = false
-            maintainPositionOnKeyboardFrameChanged = false
-        }
     }
     
     func insertMessage(text: String?, image: Data?, date: Date) {
@@ -111,8 +107,6 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         } else if let data = image, let image = UIImage(data: data) {
             let message = MockMessage(image: image,  user: user, messageId: UUID().uuidString, date: date)
             messageList.append(message)
-            let photo = SKPhoto.photoWithImage(image)
-            images.append(photo)
         }
         
         messagesCollectionView.reloadData()
@@ -199,37 +193,50 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
     }
     
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        if action == NSSelectorFromString("delete:") {
+        switch action {
+        case NSSelectorFromString("editMessage:"):
+            let realm = try! Realm()
+            let tabObjects = realm.objects(Tab.self)
+            if tabObjects[tabIndex].savedMessageList[indexPath.section].text == nil {
+                return false
+            }
             return true
-        } else {
-            return super.collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
+        case NSSelectorFromString("copyMessage:"):
+            return true
+        case NSSelectorFromString("deleteMessage:"):
+            return true
+        default:
+            return false
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        if action == NSSelectorFromString("delete:") {
+        switch action {
+        case NSSelectorFromString("editMessage:"):
+            messageInputBar.inputTextView.resignFirstResponder()
+            scrollsToBottomOnKeyboardBeginsEditing = false
+            maintainPositionOnKeyboardFrameChanged = false
             let realm = try! Realm()
             let tabObjects = realm.objects(Tab.self)
-            
-            if tabObjects[tabIndex].savedMessageList[indexPath.section].image != nil {
-                var imageIndex = 0
-                for savedMessage in tabObjects[tabIndex].savedMessageList[0..<indexPath.section] {
-                    if savedMessage.image != nil {
-                        imageIndex += 1
-                    }
-                }
-                images.remove(at: imageIndex)
-            }
-            
+            let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Edit") as! PopupViewController
+            popupVC.modalPresentationStyle = .overFullScreen
+            popupVC.modalTransitionStyle = .crossDissolve
+            popupVC.messageIndex = indexPath.section
+            popupVC.messageText = tabObjects[tabIndex].savedMessageList[indexPath.section].text ?? ""
+            present(popupVC, animated: true, completion: nil)
+        case NSSelectorFromString("copyMessage:"):
+            super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
+        case NSSelectorFromString("deleteMessage:"):
+            let realm = try! Realm()
+            let tabObjects = realm.objects(Tab.self)
             let savedMessage = tabObjects[tabIndex].savedMessageList[indexPath.section]
             try! realm.write {
                 realm.delete(savedMessage)
             }
-            
             messageList.remove(at: indexPath.section)
             messagesCollectionView.reloadData()
-        } else {
-            super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
+        default:
+            break
         }
     }
 
@@ -237,10 +244,26 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
 
 extension MessageCollectionViewCell {
     
-    override open func delete(_ sender: Any?) {
+    @objc func editMessage(_ sender: Any?) {
         if let collectionView = self.superview as? UICollectionView {
             if let indexPath = collectionView.indexPath(for: self) {
-                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("delete:"), forItemAt: indexPath, withSender: sender)
+                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("editMessage:"), forItemAt: indexPath, withSender: sender)
+            }
+        }
+    }
+    
+    @objc func copyMessage(_ sender: Any?) {
+        if let collectionView = self.superview as? UICollectionView {
+            if let indexPath = collectionView.indexPath(for: self) {
+                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("copyMessage:"), forItemAt: indexPath, withSender: sender)
+            }
+        }
+    }
+    
+    @objc func deleteMessage(_ sender: Any?) {
+        if let collectionView = self.superview as? UICollectionView {
+            if let indexPath = collectionView.indexPath(for: self) {
+                collectionView.delegate?.collectionView?(collectionView, performAction: NSSelectorFromString("deleteMessage:"), forItemAt: indexPath, withSender: sender)
             }
         }
     }
@@ -338,14 +361,15 @@ extension ChatViewController: MessageCellDelegate {
                 let realm = try! Realm()
                 let tabObjects = realm.objects(Tab.self)
                 if tabObjects[tabIndex].savedMessageList[indexPath.section].image != nil {
-                    var imageIndex = 0
-                    for savedMessage in tabObjects[tabIndex].savedMessageList[0..<indexPath.section] {
-                        if savedMessage.image != nil {
-                            imageIndex += 1
-                        }
+                    var images = [SKPhoto]()
+                    for imageMessage in tabObjects[tabIndex].savedMessageList.filter({ $0.image != nil }) {
+                        guard let data = imageMessage.image else { return }
+                        guard let image = UIImage(data: data) else { return }
+                        let photo = SKPhoto.photoWithImage(image)
+                        images.append(photo)
                     }
                     let browser = SKPhotoBrowser(photos: images)
-                    browser.initializePageIndex(imageIndex)
+                    browser.initializePageIndex(tabObjects[tabIndex].savedMessageList[0..<indexPath.section].filter({ $0.image != nil}).count)
                     present(browser, animated: true, completion: {})
                 }
             }

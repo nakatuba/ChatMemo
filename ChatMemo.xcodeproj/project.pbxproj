@@ -22,6 +22,7 @@
 		6536739B23F72AC100207269 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536739A23F72AC100207269 /* MainViewController.swift */; };
 		654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */; };
 		658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */; };
+		65CC1E3B2460433A00412334 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC1E3A2460433A00412334 /* PopupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		6536739A23F72AC100207269 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementViewController.swift; sourceTree = "<group>"; };
 		658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementTableViewCell.swift; sourceTree = "<group>"; };
+		65CC1E3A2460433A00412334 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		69C0B4D0BC6FC8D8638D418F /* Pods-ChatMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.release.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.release.xcconfig"; sourceTree = "<group>"; };
 		D756BB066418DCDF9502091D /* Pods_ChatMemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatMemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 				6536739A23F72AC100207269 /* MainViewController.swift */,
 				6514B6A724123DD900B999FD /* EmptyViewController.swift */,
 				652B607B23ECD8EE00BF2E90 /* ChatViewController.swift */,
+				65CC1E3A2460433A00412334 /* PopupViewController.swift */,
 				654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */,
 				658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */,
 				6506474D23ECC7DB00E914D7 /* Main.storyboard */,
@@ -258,6 +261,7 @@
 				652B60A423EDC95E00BF2E90 /* MockMessage.swift in Sources */,
 				658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */,
 				652B60A223EDC8C700BF2E90 /* MockUser.swift in Sources */,
+				65CC1E3B2460433A00412334 /* PopupViewController.swift in Sources */,
 				6506474A23ECC7DB00E914D7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,7 +417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -436,7 +440,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

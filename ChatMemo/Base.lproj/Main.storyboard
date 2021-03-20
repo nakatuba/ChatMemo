@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v2F-sv-MZh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -108,10 +108,10 @@
                                                 </connections>
                                             </button>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9x6-Ie-QNY">
-                                                <rect key="frame" x="0.0" y="300" width="414" height="414"/>
+                                                <rect key="frame" x="0.0" y="300" width="414" height="394"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="414" id="JaN-SR-Heb"/>
+                                                    <constraint firstAttribute="height" constant="394" id="JaN-SR-Heb"/>
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="aUj-v7-bPC" customClass="TabManagementTableViewCell" customModule="ChatMemo" customModuleProvider="target">
@@ -182,6 +182,7 @@
                                             <constraint firstItem="lbU-24-b8T" firstAttribute="top" secondItem="rIH-Ae-kko" secondAttribute="top" constant="80" id="PCq-7r-RcE"/>
                                             <constraint firstItem="0Ya-3A-2wZ" firstAttribute="leading" secondItem="rIH-Ae-kko" secondAttribute="leading" constant="8" id="QtV-q5-Bj3"/>
                                             <constraint firstItem="9x6-Ie-QNY" firstAttribute="top" secondItem="Tlx-8r-34Z" secondAttribute="bottom" constant="80" id="TDT-kT-PLg"/>
+                                            <constraint firstAttribute="bottom" secondItem="9x6-Ie-QNY" secondAttribute="bottom" constant="80" id="W1D-lJ-oHO"/>
                                             <constraint firstItem="hHW-qa-jPE" firstAttribute="leading" secondItem="rIH-Ae-kko" secondAttribute="leading" constant="8" id="XEa-n2-KER"/>
                                             <constraint firstAttribute="trailing" secondItem="0Ya-3A-2wZ" secondAttribute="trailing" constant="8" id="Xzl-Vg-O2Z"/>
                                             <constraint firstItem="Tlx-8r-34Z" firstAttribute="leading" secondItem="rIH-Ae-kko" secondAttribute="leading" constant="20" id="Ysl-wA-uk0"/>
@@ -191,7 +192,6 @@
                                             <constraint firstItem="lbU-24-b8T" firstAttribute="top" secondItem="hHW-qa-jPE" secondAttribute="bottom" constant="8" symbolic="YES" id="m41-tw-zSq"/>
                                             <constraint firstItem="Tlx-8r-34Z" firstAttribute="top" secondItem="lbU-24-b8T" secondAttribute="bottom" constant="40" id="m5m-Tg-pPS"/>
                                             <constraint firstAttribute="trailing" secondItem="hHW-qa-jPE" secondAttribute="trailing" constant="8" id="nRo-lE-qdN"/>
-                                            <constraint firstAttribute="bottom" secondItem="9x6-Ie-QNY" secondAttribute="bottom" constant="60" id="wiB-FW-lqQ"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -275,6 +275,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xlO-ka-YbS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2119" y="788"/>
+        </scene>
+        <!--Popup View Controller-->
+        <scene sceneID="H8L-Bs-1Sd">
+            <objects>
+                <viewController storyboardIdentifier="Edit" id="n5r-Gy-LvE" customClass="PopupViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Koq-TB-3vQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFl-fR-FDz">
+                                <rect key="frame" x="52" y="224" width="310.5" height="224"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zmp-wY-1Nv">
+                                        <rect key="frame" x="155" y="179" width="155.5" height="45"/>
+                                        <state key="normal" title="変更"/>
+                                        <connections>
+                                            <action selector="didTapChangeButton:" destination="n5r-Gy-LvE" eventType="touchUpInside" id="GuE-7M-iCx"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HVh-RH-hzb">
+                                        <rect key="frame" x="20" y="45" width="270.5" height="114"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-E7-8bI">
+                                        <rect key="frame" x="0.0" y="179" width="155" height="45"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="キャンセル"/>
+                                        <connections>
+                                            <action selector="didTapCancelButton:" destination="n5r-Gy-LvE" eventType="touchUpInside" id="bsY-0V-AHJ"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="メッセージの編集" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVa-YS-gah">
+                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="45"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="YWl-E7-8bI" firstAttribute="leading" secondItem="uFl-fR-FDz" secondAttribute="leading" id="0oX-jf-z7U"/>
+                                    <constraint firstItem="YWl-E7-8bI" firstAttribute="top" secondItem="HVh-RH-hzb" secondAttribute="bottom" constant="20" id="39W-H3-oTW"/>
+                                    <constraint firstItem="Zmp-wY-1Nv" firstAttribute="height" secondItem="uFl-fR-FDz" secondAttribute="height" multiplier="0.2" id="3bg-3I-CsK"/>
+                                    <constraint firstAttribute="trailing" secondItem="OVa-YS-gah" secondAttribute="trailing" id="42j-eK-8MB"/>
+                                    <constraint firstItem="OVa-YS-gah" firstAttribute="leading" secondItem="uFl-fR-FDz" secondAttribute="leading" id="6eD-Wp-W4b"/>
+                                    <constraint firstItem="OVa-YS-gah" firstAttribute="height" secondItem="uFl-fR-FDz" secondAttribute="height" multiplier="0.2" id="Ap9-D7-XRm"/>
+                                    <constraint firstAttribute="trailing" secondItem="HVh-RH-hzb" secondAttribute="trailing" constant="20" id="FCc-5q-rua"/>
+                                    <constraint firstAttribute="bottom" secondItem="YWl-E7-8bI" secondAttribute="bottom" id="G0u-iv-M7C"/>
+                                    <constraint firstItem="Zmp-wY-1Nv" firstAttribute="leading" secondItem="YWl-E7-8bI" secondAttribute="trailing" id="MSh-ev-rwo"/>
+                                    <constraint firstItem="OVa-YS-gah" firstAttribute="top" secondItem="uFl-fR-FDz" secondAttribute="top" id="Ndp-GT-RwO"/>
+                                    <constraint firstItem="HVh-RH-hzb" firstAttribute="leading" secondItem="uFl-fR-FDz" secondAttribute="leading" constant="20" id="Sqx-Pq-ZWK"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zmp-wY-1Nv" secondAttribute="bottom" id="XaJ-i2-PE0"/>
+                                    <constraint firstItem="YWl-E7-8bI" firstAttribute="height" secondItem="uFl-fR-FDz" secondAttribute="height" multiplier="0.2" id="YR0-hc-2Uw"/>
+                                    <constraint firstItem="YWl-E7-8bI" firstAttribute="width" secondItem="Zmp-wY-1Nv" secondAttribute="width" id="aHU-21-EYC"/>
+                                    <constraint firstItem="HVh-RH-hzb" firstAttribute="top" secondItem="OVa-YS-gah" secondAttribute="bottom" id="roY-84-9S5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zmp-wY-1Nv" secondAttribute="trailing" id="sbk-NN-p0j"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20397777288732394" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="uFl-fR-FDz" firstAttribute="height" secondItem="Koq-TB-3vQ" secondAttribute="height" multiplier="0.25" id="3Xk-Iz-fer"/>
+                            <constraint firstItem="uFl-fR-FDz" firstAttribute="width" secondItem="Koq-TB-3vQ" secondAttribute="width" multiplier="0.75" id="apU-oM-tmJ"/>
+                            <constraint firstItem="uFl-fR-FDz" firstAttribute="centerX" secondItem="Koq-TB-3vQ" secondAttribute="centerX" id="bvJ-2Y-Xmn"/>
+                            <constraint firstItem="uFl-fR-FDz" firstAttribute="centerY" secondItem="Koq-TB-3vQ" secondAttribute="centerY" multiplier="0.75" id="iTH-PR-xKX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qq4-H4-Ve3"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="YWl-E7-8bI" id="EwM-wB-Zyv"/>
+                        <outlet property="changeButton" destination="Zmp-wY-1Nv" id="uGe-bn-aqx"/>
+                        <outlet property="popupView" destination="uFl-fR-FDz" id="azU-Gq-bPX"/>
+                        <outlet property="textView" destination="HVh-RH-hzb" id="2vM-hR-L6H"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yXa-tF-xAy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3005.7971014492755" y="787.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZXW-fe-o1a">
