@@ -28,7 +28,30 @@ class MainViewController: ButtonBarPagerTabStripViewController {
         
         bannerView.adUnitID = "ca-app-pub-1193328696064480/7320727606"
         bannerView.rootViewController = self
-        bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(view.frame.size.width)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadBannerAd()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to:size, with:coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.loadBannerAd()
+        })
+    }
+    
+    func loadBannerAd() {
+        let frame = { () -> CGRect in
+            if #available(iOS 11.0, *) {
+                return view.frame.inset(by: view.safeAreaInsets)
+            } else {
+                return view.frame
+            }
+        }()
+        let viewWidth = frame.size.width
+        bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
         bannerView.load(GADRequest())
     }
     
