@@ -21,6 +21,8 @@
 		652B60A823EF784C00BF2E90 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B60A723EF784C00BF2E90 /* Tab.swift */; };
 		6536739B23F72AC100207269 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536739A23F72AC100207269 /* MainViewController.swift */; };
 		654AE21F23F5864E0043C7B3 /* TabManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */; };
+		65773FA9246A62BC0011DEFF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65773FAB246A62BC0011DEFF /* Localizable.strings */; };
+		65773FAE246A67830011DEFF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65773FB0246A67830011DEFF /* InfoPlist.strings */; };
 		658EB91323F9E5E8002F9C40 /* TabManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */; };
 		65CC1E3B2460433A00412334 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC1E3A2460433A00412334 /* PopupViewController.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +44,10 @@
 		652B60A723EF784C00BF2E90 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		6536739A23F72AC100207269 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		654AE21E23F5864E0043C7B3 /* TabManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementViewController.swift; sourceTree = "<group>"; };
+		65773FAA246A62BC0011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		65773FAF246A67830011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		65773FBC246A821D0011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/Main.storyboard; sourceTree = "<group>"; };
+		65773FBD246A85940011DEFF /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		658EB91223F9E5E8002F9C40 /* TabManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagementTableViewCell.swift; sourceTree = "<group>"; };
 		65CC1E3A2460433A00412334 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		69C0B4D0BC6FC8D8638D418F /* Pods-ChatMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMemo.release.xcconfig"; path = "Target Support Files/Pods-ChatMemo/Pods-ChatMemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -106,6 +112,8 @@
 				652B60A323EDC95D00BF2E90 /* MockMessage.swift */,
 				652B60A023EDC8C600BF2E90 /* MockUser.swift */,
 				652B60A723EF784C00BF2E90 /* Tab.swift */,
+				65773FAB246A62BC0011DEFF /* Localizable.strings */,
+				65773FB0246A67830011DEFF /* InfoPlist.strings */,
 			);
 			path = ChatMemo;
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 6506473B23ECC7DB00E914D7;
 			productRefGroup = 6506474523ECC7DB00E914D7 /* Products */;
@@ -179,6 +188,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65773FA9246A62BC0011DEFF /* Localizable.strings in Resources */,
+				65773FAE246A67830011DEFF /* InfoPlist.strings in Resources */,
 				6506475423ECC7DC00E914D7 /* LaunchScreen.storyboard in Resources */,
 				65212D4C2417E01C00585678 /* GoogleService-Info.plist in Resources */,
 				6506475123ECC7DC00E914D7 /* Assets.xcassets in Resources */,
@@ -273,6 +284,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6506474E23ECC7DB00E914D7 /* Base */,
+				65773FBC246A821D0011DEFF /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -281,8 +293,25 @@
 			isa = PBXVariantGroup;
 			children = (
 				6506475323ECC7DC00E914D7 /* Base */,
+				65773FBD246A85940011DEFF /* ja */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		65773FAB246A62BC0011DEFF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65773FAA246A62BC0011DEFF /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		65773FB0246A67830011DEFF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65773FAF246A67830011DEFF /* ja */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -292,6 +321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -352,6 +382,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -417,7 +448,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -440,7 +471,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nakatuba.ChatMemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

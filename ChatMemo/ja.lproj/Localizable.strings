@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  ChatMemo
+
+  Created by 中川翼 on 2020/05/12.
+  Copyright © 2020 中川翼. All rights reserved.
+*/
+"en_US" = "ja_JP";
+"Edit" = "編集";
+"Copy" = "コピー";
+"Delete" = "削除";
+"Open in Safari" = "Safariで開く";
+"New message" = "新規メッセージ";
+"Cancel" = "キャンセル";
+"Rename \"%@\"" = "タブ名変更";
+"Change" = "変更";
+"Please enter a new tab name." = "新しいタブ名を入力してください";
+"Delete \"%@\"" = "タブの削除";
+"Are you sure you want to delete this tab?" = "削除してもいいですか？";

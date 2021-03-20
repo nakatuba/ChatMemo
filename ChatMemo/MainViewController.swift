@@ -24,7 +24,6 @@ class MainViewController: ButtonBarPagerTabStripViewController {
             newCell?.label.textColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
         }
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
         
         bannerView.adUnitID = "ca-app-pub-1193328696064480/7320727606"
         bannerView.rootViewController = self

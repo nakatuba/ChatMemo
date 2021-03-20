@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  ChatMemo
+
+  Created by 中川翼 on 2020/05/12.
+  Copyright © 2020 中川翼. All rights reserved.
+*/
+CFBundleDisplayName = "チャットメモ";

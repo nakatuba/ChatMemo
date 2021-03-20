@@ -20,7 +20,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
     
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.locale = Locale(identifier: NSLocalizedString("en_US", comment: ""))
         return formatter
     }()
     
@@ -45,7 +45,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
         messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 20.0
-        messageInputBar.sendButton.title = "送信"
+        messageInputBar.sendButton.setImage(UIImage(named: "send"), for: .normal)
         scrollsToBottomOnKeyboardBeginsEditing = true
         maintainPositionOnKeyboardFrameChanged = true
         
@@ -68,6 +68,7 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         let items = [cameraButton, photoButton, .flexibleSpace]
         messageInputBar.setStackViewItems(items, forStack: .left, animated: false)
         messageInputBar.setLeftStackViewWidthConstant(to: 76, animated: false)
+        messageInputBar.setRightStackViewWidthConstant(to: 26, animated: false)
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
@@ -87,9 +88,12 @@ class ChatViewController: MessagesViewController, IndicatorInfoProvider, UIImage
         tapGesture.delegate = self
         messagesCollectionView.addGestureRecognizer(tapGesture)
         
-        let editMenuItem = UIMenuItem(title: "編集", action: #selector(MessageCollectionViewCell.editMessage(_:)))
-        let copyMenuItem = UIMenuItem(title: "コピー", action: #selector(MessageCollectionViewCell.copyMessage(_:)))
-        let deleteMenuItem = UIMenuItem(title: "削除", action: #selector(MessageCollectionViewCell.deleteMessage(_:)))
+        let editMenuItem = UIMenuItem(title: NSLocalizedString("Edit", comment: ""),
+                                      action: #selector(MessageCollectionViewCell.editMessage(_:)))
+        let copyMenuItem = UIMenuItem(title: NSLocalizedString("Copy", comment: ""),
+                                      action: #selector(MessageCollectionViewCell.copyMessage(_:)))
+        let deleteMenuItem = UIMenuItem(title: NSLocalizedString("Delete", comment: ""),
+                                        action: #selector(MessageCollectionViewCell.deleteMessage(_:)))
         UIMenuController.shared.menuItems = [editMenuItem, copyMenuItem, deleteMenuItem]
     }
     
@@ -290,9 +294,9 @@ extension ChatViewController: MessagesDataSource {
             case Calendar.current.isDateInToday(message.sentDate) || Calendar.current.isDateInYesterday(message.sentDate):
                 formatter.doesRelativeDateFormatting = true
             case Calendar.current.isDate(message.sentDate, equalTo: Date(), toGranularity: .year):
-                formatter.dateFormat = "M/d(E)"
+                formatter.setLocalizedDateFormatFromTemplate("MdE")
             default:
-                formatter.dateFormat = "y年M月d日(E)"
+                formatter.setLocalizedDateFormatFromTemplate("yMMMMdE")
             }
 
             return NSAttributedString(string: formatter.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -301,8 +305,7 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
+        formatter.setLocalizedDateFormatFromTemplate("Hm")
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2), NSAttributedString.Key.foregroundColor: UIColor.white])
     }
@@ -383,17 +386,17 @@ extension ChatViewController: MessageCellDelegate {
     func didSelectURL(_ url: URL) {
         messageInputBar.inputTextView.resignFirstResponder()
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        var title = "Safariで開く"
+        var title = NSLocalizedString("Open in Safari", comment: "")
         
         if url.scheme == "mailto" {
-                title = "新規メッセージ"
+                title = NSLocalizedString("New message", comment: "")
         }
         
         let urlAction = UIAlertAction(title: title, style: .default, handler: { _ in
             UIApplication.shared.open(url)
             self.becomeFirstResponder()
         })
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { _ in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
             self.becomeFirstResponder()
         })
         

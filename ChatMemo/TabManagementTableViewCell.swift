@@ -10,17 +10,22 @@ import UIKit
 
 class TabManagementTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var changeButton: UIButton!
+    @IBOutlet weak var renameButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        changeButton.layer.borderWidth = 1.0
-        changeButton.layer.borderColor = UIColor.systemGreen.cgColor
-        changeButton.layer.cornerRadius = 4.0
+        renameButton.layer.borderWidth = 1.0
+        renameButton.layer.borderColor = UIColor.systemGreen.cgColor
+        renameButton.layer.cornerRadius = 4.0
         deleteButton.layer.borderWidth = 1.0
         deleteButton.layer.borderColor = UIColor.systemRed.cgColor
         deleteButton.layer.cornerRadius = 4.0
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textLabel?.frame.size.width -= renameButton.frame.width + deleteButton.frame.width + 20
     }
 
 }

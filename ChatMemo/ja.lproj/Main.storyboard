@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ChatMemo-->
+        <!--チャットメモ-->
         <scene sceneID="aW2-DI-rD6">
             <objects>
                 <viewController id="c6O-2z-yZh" customClass="MainViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,8 +51,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VNN-OJ-D9k"/>
                     </view>
-                    <navigationItem key="navigationItem" title="ChatMemo" id="8Sg-8z-9kX">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="2jh-wN-xqv"/>
+                    <navigationItem key="navigationItem" title="チャットメモ" id="8Sg-8z-9kX">
+                        <barButtonItem key="backBarButtonItem" title="戻る" id="2jh-wN-xqv"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="A3I-Hq-kAg">
                             <connections>
                                 <segue destination="FgF-U5-fX5" kind="show" id="qOQ-7G-dpD"/>
@@ -69,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="2118.840579710145" y="115.84821428571428"/>
         </scene>
-        <!--Tab Management-->
+        <!--タブ管理-->
         <scene sceneID="d8i-gr-zez">
             <objects>
                 <viewController id="FgF-U5-fX5" customClass="TabManagementViewController" customModule="ChatMemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -83,7 +83,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIH-Ae-kko">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please enter a tab name." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lbU-24-b8T">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="タブ名を入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lbU-24-b8T">
                                                 <rect key="frame" x="0.0" y="80" width="414" height="50"/>
                                                 <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -99,7 +99,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="fHT-7y-NaK"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                <state key="normal" title="Add">
+                                                <state key="normal" title="追加する">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -123,11 +123,10 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SJ-wg-CMN">
                                                                     <rect key="frame" x="354" y="7" width="50" height="30"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="30" id="udt-Wo-cXd"/>
+                                                                        <constraint firstAttribute="height" constant="30" id="gUF-1e-MIQ"/>
                                                                         <constraint firstAttribute="width" constant="50" id="zRM-2N-nsb"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                                    <state key="normal" title="Delete">
+                                                                    <state key="normal" title="削除">
                                                                         <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <connections>
@@ -137,11 +136,10 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxQ-xE-vUO">
                                                                     <rect key="frame" x="294" y="7" width="50" height="30"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="3ag-Gh-jzC"/>
                                                                         <constraint firstAttribute="width" constant="50" id="gC3-r7-9jW"/>
-                                                                        <constraint firstAttribute="height" constant="30" id="vDf-jR-qvA"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                                    <state key="normal" title="Rename">
+                                                                    <state key="normal" title="変更">
                                                                         <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <connections>
@@ -164,14 +162,14 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a tab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHW-qa-jPE">
-                                                <rect key="frame" x="8" y="57" width="398" height="15"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タブ追加" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHW-qa-jPE">
+                                                <rect key="frame" x="8" y="57.5" width="398" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rename, delete and reorder tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ya-3A-2wZ">
-                                                <rect key="frame" x="8" y="277.5" width="398" height="14.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タブ名変更・削除・並び替え" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ya-3A-2wZ">
+                                                <rect key="frame" x="8" y="277" width="398" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -223,7 +221,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eTl-AK-kFe"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tab Management" id="j47-4w-Lqf"/>
+                    <navigationItem key="navigationItem" title="タブ管理" id="j47-4w-Lqf"/>
                     <connections>
                         <outlet property="addButton" destination="Tlx-8r-34Z" id="hS4-DE-M0c"/>
                         <outlet property="bannerView" destination="Wxv-F2-Vu3" id="0VW-Xi-Ybs"/>
@@ -244,8 +242,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can add a tab in &quot;Tab Management&quot;." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXW-dj-nz0">
-                                <rect key="frame" x="32.5" y="436" width="349.5" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="「タブ管理」でタブを追加できます" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQP-zR-acj">
+                                <rect key="frame" x="44" y="436" width="326.5" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -253,8 +251,8 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DXW-dj-nz0" firstAttribute="centerX" secondItem="pQQ-PF-deq" secondAttribute="centerX" id="1AK-Fd-nxE"/>
-                            <constraint firstItem="DXW-dj-nz0" firstAttribute="centerY" secondItem="pQQ-PF-deq" secondAttribute="centerY" id="Fkl-hv-h3T"/>
+                            <constraint firstItem="iQP-zR-acj" firstAttribute="centerX" secondItem="pQQ-PF-deq" secondAttribute="centerX" id="ODx-HC-xWC"/>
+                            <constraint firstItem="iQP-zR-acj" firstAttribute="centerY" secondItem="pQQ-PF-deq" secondAttribute="centerY" id="cRV-SP-Qku"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KxB-hU-dRq"/>
                     </view>
@@ -277,7 +275,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zmp-wY-1Nv">
                                         <rect key="frame" x="155" y="179" width="155.5" height="45"/>
-                                        <state key="normal" title="Change"/>
+                                        <state key="normal" title="変更"/>
                                         <connections>
                                             <action selector="didTapChangeButton:" destination="n5r-Gy-LvE" eventType="touchUpInside" id="GuE-7M-iCx"/>
                                         </connections>
@@ -292,12 +290,12 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-E7-8bI">
                                         <rect key="frame" x="0.0" y="179" width="155" height="45"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cancel"/>
+                                        <state key="normal" title="キャンセル"/>
                                         <connections>
                                             <action selector="didTapCancelButton:" destination="n5r-Gy-LvE" eventType="touchUpInside" id="bsY-0V-AHJ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVa-YS-gah">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="メッセージの編集" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVa-YS-gah">
                                         <rect key="frame" x="0.0" y="0.0" width="310.5" height="45"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -354,7 +352,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.10980392156862745" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.11764705882352941" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>

@@ -20,7 +20,6 @@ class TabManagementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = UIColor(red: 0/255, green: 30/255, blue: 60/255, alpha: 1)
         addButton.layer.cornerRadius = 10.0
         textField.delegate = self
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
@@ -72,12 +71,15 @@ class TabManagementViewController: UIViewController {
         addTab()
     }
     
-    @IBAction func didTapChangeButton(_ sender: UIButton) {
-        let point = self.tableView.convert(CGPoint.zero, from: sender)
-        guard let indexPath = self.tableView.indexPathForRow(at: point) else { return }
+    @IBAction func didTapRenameButton(_ sender: UIButton) {
+        let point = tableView.convert(CGPoint.zero, from: sender)
+        guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+        guard let tabName = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
         
-        let alert = UIAlertController(title: "タブ名変更", message: nil, preferredStyle: .alert)
-        let changeAction = UIAlertAction(title: "変更", style: .default, handler: { _ in
+        let alert = UIAlertController(title: String(format: NSLocalizedString("Rename \"%@\"", comment: ""), tabName),
+                                      message: nil,
+                                      preferredStyle: .alert)
+        let changeAction = UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default, handler: { _ in
             let textField = alert.textFields![0]
             guard let text = textField.text, !text.isEmpty else { return }
             let realm = try! Realm()
@@ -88,13 +90,11 @@ class TabManagementViewController: UIViewController {
             self.tableView.reloadData()
             self.loadTableHeight()
         })
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         
         alert.addTextField(configurationHandler: { textField in
-            let realm = try! Realm()
-            let tabObjects = realm.objects(Tab.self)
-            textField.text = tabObjects[indexPath.row].name
-            textField.placeholder = "新しいタブ名を入力してください"
+            textField.text = tabName
+            textField.placeholder = NSLocalizedString("Please enter a new tab name.", comment: "")
             textField.returnKeyType = .done
         })
         alert.addAction(changeAction)
@@ -103,11 +103,14 @@ class TabManagementViewController: UIViewController {
     }
     
     @IBAction func didTapDeleteButton(_ sender: UIButton) {
-        let point = self.tableView.convert(CGPoint.zero, from: sender)
-        guard let indexPath = self.tableView.indexPathForRow(at: point) else { return }
+        let point = tableView.convert(CGPoint.zero, from: sender)
+        guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+        guard let tabName = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
         
-        let alert = UIAlertController(title: "タブの削除", message: "削除してもいいですか？", preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "削除", style: .destructive, handler: { _ in
+        let alert = UIAlertController(title: String(format: NSLocalizedString("Delete \"%@\"", comment: ""), tabName),
+                                      message: NSLocalizedString("Are you sure you want to delete this tab?", comment: ""),
+                                      preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: { _ in
             let realm = try! Realm()
             let tabObjects = realm.objects(Tab.self)
             guard let lastIndex = tabObjects.indices.last else { return }
@@ -124,7 +127,7 @@ class TabManagementViewController: UIViewController {
             self.tableView.reloadData()
             self.loadTableHeight()
         })
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
